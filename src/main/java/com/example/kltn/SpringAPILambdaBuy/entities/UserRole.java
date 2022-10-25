@@ -1,5 +1,6 @@
 package com.example.kltn.SpringAPILambdaBuy.entities;
 
-public class RoleEntity {
-
+public enum UserRole {
+	CUSTOMER,
+	ADMIN
 }
