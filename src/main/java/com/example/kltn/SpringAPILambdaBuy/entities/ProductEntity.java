@@ -2,6 +2,7 @@ package com.example.kltn.SpringAPILambdaBuy.entities;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -30,7 +31,7 @@ public class ProductEntity {
 	@Column()
 	private String description;
 	
-	@Column(name = "unit_price")
+	@Column
 	private double unitPrice;
 	
 	@Column()
@@ -40,12 +41,12 @@ public class ProductEntity {
 	private String image;
 	
 	@Column()
-	private ProductStatus status;
+	private String status;
 	
-	@Column(name = "in_stock")
+	@Column
 	private int inStock;
 	
-	@Column(name = "year_of_manufacture")
+	@Column
 	private int yearOfManufacture;
 	
 	@Column()
@@ -55,18 +56,25 @@ public class ProductEntity {
 	private boolean special;
 	
 	@CreatedDate()
-	@Column(name = "created_date")
+	@Column
 	private Date createdDate;
 	
 	@CreatedBy()
-	@Column(name = "created_by")
+	@Column
 	private String createdBy;
 	
-	@Column(name = "updated_date")
+	@Column
 	private Date updatedDate;
 	
-	@Column(name = "updated_by")
+	@Column
 	private String updatedBy;
+	
+	@OneToMany(mappedBy = "product")
+	Set<OrderDetail> listOrderDetail;
+	
+	@ManyToOne
+	@JoinColumn(name = "admin_id")
+	private AdminEntity admin;
 	
 	@ManyToOne
 	@JoinColumn(name = "category")
@@ -75,7 +83,62 @@ public class ProductEntity {
 	@ManyToOne
 	@JoinColumn(name = "brand")
 	private BrandEntity brand;
-	
+
+	public ProductEntity() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ProductEntity(String id, String name, String description, double unitPrice, double discount, String image,
+			String status, int inStock, int yearOfManufacture, String country, boolean special, Date createdDate,
+			String createdBy, Date updatedDate, String updatedBy, Set<OrderDetail> listOrderDetail, AdminEntity admin,
+			CategoryEntity category, BrandEntity brand) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.unitPrice = unitPrice;
+		this.discount = discount;
+		this.image = image;
+		this.status = status;
+		this.inStock = inStock;
+		this.yearOfManufacture = yearOfManufacture;
+		this.country = country;
+		this.special = special;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+		this.updatedDate = updatedDate;
+		this.updatedBy = updatedBy;
+		this.listOrderDetail = listOrderDetail;
+		this.admin = admin;
+		this.category = category;
+		this.brand = brand;
+	}
+
+	public ProductEntity(String name, String description, double unitPrice, double discount, String image,
+			String status, int inStock, int yearOfManufacture, String country, boolean special, Date createdDate,
+			String createdBy, Date updatedDate, String updatedBy, Set<OrderDetail> listOrderDetail, AdminEntity admin,
+			CategoryEntity category, BrandEntity brand) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.unitPrice = unitPrice;
+		this.discount = discount;
+		this.image = image;
+		this.status = status;
+		this.inStock = inStock;
+		this.yearOfManufacture = yearOfManufacture;
+		this.country = country;
+		this.special = special;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+		this.updatedDate = updatedDate;
+		this.updatedBy = updatedBy;
+		this.listOrderDetail = listOrderDetail;
+		this.admin = admin;
+		this.category = category;
+		this.brand = brand;
+	}
 
 	public String getId() {
 		return id;
@@ -125,11 +188,11 @@ public class ProductEntity {
 		this.image = image;
 	}
 
-	public ProductStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(ProductStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -196,6 +259,36 @@ public class ProductEntity {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	
-	
+
+	public Set<OrderDetail> getOrderDetails() {
+		return listOrderDetail;
+	}
+
+	public void setOrderDetails(Set<OrderDetail> listOrderDetail) {
+		this.listOrderDetail = listOrderDetail;
+	}
+
+	public AdminEntity getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(AdminEntity admin) {
+		this.admin = admin;
+	}
+
+	public CategoryEntity getCategory() {
+		return category;
+	}
+
+	public void setCategory(CategoryEntity category) {
+		this.category = category;
+	}
+
+	public BrandEntity getBrand() {
+		return brand;
+	}
+
+	public void setBrand(BrandEntity brand) {
+		this.brand = brand;
+	}
 }

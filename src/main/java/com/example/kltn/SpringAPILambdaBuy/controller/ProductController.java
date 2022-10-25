@@ -19,7 +19,7 @@ import com.example.kltn.SpringAPILambdaBuy.entities.ProductEntity;
 import com.example.kltn.SpringAPILambdaBuy.service.ProductService;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/products")
 public class ProductController {
 	@Autowired
 	private ProductService productService;
