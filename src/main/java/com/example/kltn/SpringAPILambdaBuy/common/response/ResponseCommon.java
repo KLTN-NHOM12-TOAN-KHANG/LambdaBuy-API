@@ -1,4 +1,4 @@
-package com.example.kltn.SpringAPILambdaBuy.common;
+package com.example.kltn.SpringAPILambdaBuy.common.response;
 
 public class ResponseCommon<T> {
 	public boolean success;

@@ -1,4 +1,4 @@
-package com.example.kltn.SpringAPILambdaBuy.dto.request;
+package com.example.kltn.SpringAPILambdaBuy.common.request;
 
 public class LoginDto {
 	private String email;

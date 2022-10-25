@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.kltn.SpringAPILambdaBuy.common.ResponseCommon;
-import com.example.kltn.SpringAPILambdaBuy.dto.request.RegisterDto;
-import com.example.kltn.SpringAPILambdaBuy.dto.response.UserResponseDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.RegisterDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
+import com.example.kltn.SpringAPILambdaBuy.common.response.UserResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserEntity;
 import com.example.kltn.SpringAPILambdaBuy.service.UserService;
 

@@ -1,4 +1,4 @@
-package com.example.kltn.SpringAPILambdaBuy.dto.response;
+package com.example.kltn.SpringAPILambdaBuy.common.response;
 
 import java.util.Date;
 

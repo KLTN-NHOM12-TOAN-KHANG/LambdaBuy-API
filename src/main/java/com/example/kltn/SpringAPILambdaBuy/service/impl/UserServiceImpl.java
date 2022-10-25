@@ -15,10 +15,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.kltn.SpringAPILambdaBuy.common.ResponseCommon;
-import com.example.kltn.SpringAPILambdaBuy.dto.request.LoginDto;
-import com.example.kltn.SpringAPILambdaBuy.dto.request.RegisterDto;
-import com.example.kltn.SpringAPILambdaBuy.dto.response.UserResponseDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.LoginDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.RegisterDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
+import com.example.kltn.SpringAPILambdaBuy.common.response.UserResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.entities.CartEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.ConfirmationTokenEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.CustomerEntity;
