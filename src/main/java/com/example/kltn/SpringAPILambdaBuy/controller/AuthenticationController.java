@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.kltn.SpringAPILambdaBuy.common.ResponseCommon;
-import com.example.kltn.SpringAPILambdaBuy.dto.request.LoginDto;
-import com.example.kltn.SpringAPILambdaBuy.dto.request.RegisterDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.LoginDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.RegisterDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.service.AuthenticationService;
 import com.example.kltn.SpringAPILambdaBuy.service.UserService;
 
