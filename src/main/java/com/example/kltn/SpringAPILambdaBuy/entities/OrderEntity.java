@@ -21,10 +21,10 @@ public class OrderEntity {
 	@Id
 	private String id = UUID.randomUUID().toString();
 	
-	@Column(name = "shipped_date")
+	@Column
 	private Date shippedDate;
 	
-	@Column(name = "shipped_address")
+	@Column
 	private String shippedAddress;
 	
 	@Column

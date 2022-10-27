@@ -18,8 +18,8 @@ public class ConfirmationTokenEntity implements Serializable {
 	@Id
 	private String id = UUID.randomUUID().toString();
 	
-	@Column(nullable = false, name = "token_code")
-	private String token;
+	@Column(nullable = false)
+	private String tokenCode;
 	
 	@Column(nullable = false)
 	private LocalDateTime createdDate;
@@ -43,9 +43,9 @@ public class ConfirmationTokenEntity implements Serializable {
 	}
 
 
-	public ConfirmationTokenEntity(String token, LocalDateTime createdDate, LocalDateTime expiredDate, UserEntity user) {
+	public ConfirmationTokenEntity(String tokenCode, LocalDateTime createdDate, LocalDateTime expiredDate, UserEntity user) {
 		super();
-		this.token = token;
+		this.tokenCode = tokenCode;
 		this.createdDate = createdDate;
 		this.expiresDate = expiredDate;
 		this.user = user;
@@ -62,13 +62,13 @@ public class ConfirmationTokenEntity implements Serializable {
 	}
 
 
-	public String getToken() {
-		return token;
+	public String getTokenCode() {
+		return tokenCode;
 	}
 
 
-	public void setToken(String token) {
-		this.token = token;
+	public void setTokenCode(String token) {
+		this.tokenCode = token;
 	}
 
 
@@ -114,7 +114,7 @@ public class ConfirmationTokenEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ConfirmationTokenEntity [id=" + id + ", token=" + token + ", createdDate=" + createdDate
+		return "ConfirmationTokenEntity [id=" + id + ", tokenCode=" + tokenCode + ", createdDate=" + createdDate
 				+ ", expiresDate=" + expiresDate + ", confirmDate=" + confirmDate + ", user=" + user + "]";
 	}
 }

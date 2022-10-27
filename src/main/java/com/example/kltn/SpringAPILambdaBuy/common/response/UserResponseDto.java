@@ -3,7 +3,6 @@ package com.example.kltn.SpringAPILambdaBuy.common.response;
 import java.util.Date;
 
 import com.example.kltn.SpringAPILambdaBuy.entities.UserRole;
-import com.example.kltn.SpringAPILambdaBuy.entities.UserStatus;
 
 public class UserResponseDto {
 	private String id;

@@ -24,7 +24,6 @@ import com.example.kltn.SpringAPILambdaBuy.entities.ConfirmationTokenEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.CustomerEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserRole;
-import com.example.kltn.SpringAPILambdaBuy.entities.UserStatus;
 import com.example.kltn.SpringAPILambdaBuy.repository.UserRepository;
 import com.example.kltn.SpringAPILambdaBuy.service.CartService;
 import com.example.kltn.SpringAPILambdaBuy.service.ConfirmationTokenService;
