@@ -41,13 +41,6 @@ public class MailService implements MailSender {
                 });
 		
 		try {
-//			MimeMessage mimeMessage = mailSender.createMimeMessage();
-//			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-//			// true is mean have use html
-//			helper.setText(email, true);
-//			helper.setTo(to);
-//			helper.setSubject("CONFIRM YOUR EMAIL");
-//			helper.setFrom("dev10.vndigitech@gmail.com");
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(email_host));
 			message.setRecipients(

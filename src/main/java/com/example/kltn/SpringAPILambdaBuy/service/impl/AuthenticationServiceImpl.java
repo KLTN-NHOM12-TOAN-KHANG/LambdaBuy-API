@@ -106,7 +106,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		return new ResponseCommon<>(200, true, "REGISTER_SUCCESS", createToken.toString());
 	}
 	
-
 	@Override
 	public ResponseCommon<?> login(LoginDto loginDto) {
 		UserEntity userName = userService.findByUsername(loginDto.getUsername());
