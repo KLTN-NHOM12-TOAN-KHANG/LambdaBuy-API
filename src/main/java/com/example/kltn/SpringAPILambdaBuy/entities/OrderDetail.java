@@ -7,8 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "orderdetail")
 public class OrderDetail {
 	@EmbeddedId
 	private OrderDetailKey id;
@@ -32,9 +34,6 @@ public class OrderDetail {
 	@Column
 	private double discount;
 	
-	@ManyToOne
-	@JoinColumn(name = "cart_id")
-	private CartEntity cart;
 
 	public OrderDetail() {
 		super();
@@ -50,7 +49,6 @@ public class OrderDetail {
 		this.unitPrice = unitPrice;
 		this.quantity = quantity;
 		this.discount = discount;
-		this.cart = cart;
 	}
 
 	public OrderDetail(ProductEntity product, OrderEntity order, double unitPrice, int quantity, double discount,
@@ -61,7 +59,6 @@ public class OrderDetail {
 		this.unitPrice = unitPrice;
 		this.quantity = quantity;
 		this.discount = discount;
-		this.cart = cart;
 	}
 
 	public OrderDetailKey getId() {
@@ -110,15 +107,5 @@ public class OrderDetail {
 
 	public void setDiscount(double discount) {
 		this.discount = discount;
-	}
-
-	public CartEntity getCart() {
-		return cart;
-	}
-
-	public void setCart(CartEntity cart) {
-		this.cart = cart;
-	}
-	
-	
+	}	
 }

@@ -77,12 +77,20 @@ public class ProductEntity {
 	private AdminEntity admin;
 	
 	@ManyToOne
-	@JoinColumn(name = "category")
+	@JoinColumn(name = "cart_id")
+	private CartEntity cart;
+	
+	@ManyToOne
+	@JoinColumn(name = "category_id")
 	private CategoryEntity category;
 	
 	@ManyToOne
-	@JoinColumn(name = "brand")
+	@JoinColumn(name = "brand_id")
 	private BrandEntity brand;
+	
+	@ManyToOne
+	@JoinColumn(name = "supplier_id")
+	private SupplierEntity supplier;
 
 	public ProductEntity() {
 		super();

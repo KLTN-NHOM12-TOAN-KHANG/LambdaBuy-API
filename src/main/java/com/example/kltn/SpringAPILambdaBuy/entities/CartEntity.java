@@ -31,7 +31,7 @@ public class CartEntity {
 	private CustomerEntity customer;
 	
 	@OneToMany(mappedBy = "cart")
-	private Set<OrderDetail> listOrderDetail;
+	private Set<ProductEntity> listProduct;
 
 	public CartEntity() {
 		super();
@@ -39,21 +39,21 @@ public class CartEntity {
 	}
 
 	public CartEntity(String id, int itemQuantity, boolean isEmpty, CustomerEntity customer,
-			Set<OrderDetail> listOrderDetail) {
+			Set<ProductEntity> listProduct) {
 		super();
 		this.id = id;
 		this.itemQuantity = itemQuantity;
 		this.isEmpty = isEmpty;
 		this.customer = customer;
-		this.listOrderDetail = listOrderDetail;
+		this.listProduct = listProduct;
 	}
 
-	public CartEntity(int itemQuantity, boolean isEmpty, CustomerEntity customer, Set<OrderDetail> listOrderDetail) {
+	public CartEntity(int itemQuantity, boolean isEmpty, CustomerEntity customer, Set<ProductEntity> listProduct) {
 		super();
 		this.itemQuantity = itemQuantity;
 		this.isEmpty = isEmpty;
 		this.customer = customer;
-		this.listOrderDetail = listOrderDetail;
+		this.listProduct = listProduct;
 	}
 	
 	public CartEntity(int itemQuantity, boolean isEmpty, CustomerEntity customer) {
@@ -95,11 +95,11 @@ public class CartEntity {
 		this.customer = customer;
 	}
 
-	public Set<OrderDetail> getListOrderDetail() {
-		return listOrderDetail;
+	public Set<ProductEntity> getListProduct() {
+		return listProduct;
 	}
 
-	public void setListOrderDetail(Set<OrderDetail> listOrderDetail) {
-		this.listOrderDetail = listOrderDetail;
+	public void setListOrderDetail(Set<ProductEntity> listProduct) {
+		this.listProduct = listProduct;
 	}
 }
