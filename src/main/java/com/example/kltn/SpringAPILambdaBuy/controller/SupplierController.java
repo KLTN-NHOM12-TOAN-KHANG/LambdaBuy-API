@@ -18,7 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.kltn.SpringAPILambdaBuy.common.request.supplier.CreateSupplierDto;
 import com.example.kltn.SpringAPILambdaBuy.common.request.supplier.UpdateSupplierDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
-import com.example.kltn.SpringAPILambdaBuy.common.response.SupplierResponseDto;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.entities.SupplierEntity;
 import com.example.kltn.SpringAPILambdaBuy.service.SupplierService;
 
@@ -57,5 +62,4 @@ public class SupplierController {
 	public ResponseEntity<?> deleteSupplier(@PathVariable("id") String id) {
 		return ResponseEntity.ok().body(supplierService.deleteById(id));
 	}
-	
 }

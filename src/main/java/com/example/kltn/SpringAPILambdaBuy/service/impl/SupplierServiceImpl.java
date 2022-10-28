@@ -12,6 +12,7 @@ import com.example.kltn.SpringAPILambdaBuy.common.request.supplier.CreateSupplie
 import com.example.kltn.SpringAPILambdaBuy.common.request.supplier.UpdateSupplierDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.common.response.SupplierResponseDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.entities.SupplierEntity;
 import com.example.kltn.SpringAPILambdaBuy.repository.SupplierRepository;
 import com.example.kltn.SpringAPILambdaBuy.service.SupplierService;
@@ -22,13 +23,12 @@ public class SupplierServiceImpl implements SupplierService {
 	@Autowired
 	private SupplierRepository supplierRepository;
 	
-	
 	@Override
-	public ResponseCommon<List<SupplierResponseDto>> findAll() {
+	public ResponseCommon<?> findAll() {
 		List<SupplierEntity> suppliers = supplierRepository.findAll();
 		List<SupplierResponseDto> listSupplierDto = new ArrayList<>();
 		for (SupplierEntity supplierEntity : suppliers) {
-			SupplierResponseDto supplierDto = new SupplierResponseDto(supplierEntity.getName(), supplierEntity.getAddress(), supplierEntity.getDescription(), supplierEntity.getIsDeleted(), supplierEntity.getCreatedDate(), supplierEntity.getCreatedBy(), supplierEntity.getUpdatedDate(), supplierEntity.getUpdatedBy()); 
+			SupplierResponseDto supplierDto = new SupplierResponseDto(supplierEntity.getId(), supplierEntity.getName(), supplierEntity.getAddress(), supplierEntity.getDescription(), supplierEntity.getIsDeleted(), supplierEntity.getCreatedDate(), supplierEntity.getCreatedBy(), supplierEntity.getUpdatedDate(), supplierEntity.getUpdatedBy()); 
 			listSupplierDto.add(supplierDto);
 		}
 		return new ResponseCommon<>(200, true, "SUCCESS", listSupplierDto);
@@ -38,7 +38,7 @@ public class SupplierServiceImpl implements SupplierService {
 	public ResponseCommon<SupplierResponseDto> findById(String id) {
 		SupplierEntity supplierEntity = supplierRepository.findById(id).get();
 		if(supplierEntity != null) {
-			SupplierResponseDto supplierDto = new SupplierResponseDto(supplierEntity.getName(), supplierEntity.getAddress(), supplierEntity.getDescription(), supplierEntity.getIsDeleted(), supplierEntity.getCreatedDate(), supplierEntity.getCreatedBy(), supplierEntity.getUpdatedDate(), supplierEntity.getUpdatedBy()); 
+			SupplierResponseDto supplierDto = new SupplierResponseDto(supplierEntity.getId(), supplierEntity.getName(), supplierEntity.getAddress(), supplierEntity.getDescription(), supplierEntity.getIsDeleted(), supplierEntity.getCreatedDate(), supplierEntity.getCreatedBy(), supplierEntity.getUpdatedDate(), supplierEntity.getUpdatedBy()); 
 			return new ResponseCommon<>(200, true, "FIND_SUPPLIER_SUCCESS", supplierDto);
 		}
 		return new ResponseCommon<>(500, false, "SERVER_ERROR_INTERNAL");
@@ -48,7 +48,7 @@ public class SupplierServiceImpl implements SupplierService {
 	public ResponseCommon<SupplierResponseDto> findByName(String name) {
 		SupplierEntity supplierEntity = supplierRepository.findByName(name);
 		if(supplierEntity != null) {
-			SupplierResponseDto supplierDto = new SupplierResponseDto(supplierEntity.getName(), supplierEntity.getAddress(), supplierEntity.getDescription(), supplierEntity.getIsDeleted(), supplierEntity.getCreatedDate(), supplierEntity.getCreatedBy(), supplierEntity.getUpdatedDate(), supplierEntity.getUpdatedBy()); 
+			SupplierResponseDto supplierDto = new SupplierResponseDto(supplierEntity.getId(), supplierEntity.getName(), supplierEntity.getAddress(), supplierEntity.getDescription(), supplierEntity.getIsDeleted(), supplierEntity.getCreatedDate(), supplierEntity.getCreatedBy(), supplierEntity.getUpdatedDate(), supplierEntity.getUpdatedBy()); 
 			return new ResponseCommon<>(200, true, "FIND_SUPPLIER_SUCCESS", supplierDto);
 		}
 		return new ResponseCommon<>(500, false, "SERVER_ERROR_INTERNAL");

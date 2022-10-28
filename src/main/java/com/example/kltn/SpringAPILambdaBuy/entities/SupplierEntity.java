@@ -54,7 +54,6 @@ public class SupplierEntity {
 	
 	@Column
 	private String updatedBy;
-	
 
 	public String getId() {
 		return id;
@@ -154,9 +153,8 @@ public class SupplierEntity {
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
 	}
-
-	public SupplierEntity(String name, String address, String description, Set<ProductEntity> listProduct, boolean isDeleted, Date createdDate,
-			String createdBy) {
+	
+	public SupplierEntity(String name, String address, String description, Set<ProductEntity> listProduct, boolean isDeleted, Date createdDate, String createdBy) {
 		super();
 		this.name = name;
 		this.address = address;
