@@ -52,8 +52,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private EmailValidator emailValidator;
 	
-	List<UserResponseDto> listUserDto = new ArrayList<>();
-	
 	
 	@Override
 	public UserEntity findByUsername(String username) {
@@ -66,9 +64,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserEntity saveUser(UserEntity user) {
+	public void saveUser(UserEntity user) {
 //		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		return userRepository.save(user);
+		userRepository.save(user);
 	}
 
 	@Override
@@ -79,11 +77,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ResponseCommon<List<UserResponseDto>> getUsers() {
 		List<UserEntity> listUser = userRepository.findAll();
+		List<UserResponseDto> listUserDto = new ArrayList<>();
 		for (UserEntity userEntity : listUser) {
-			UserResponseDto userDto = new UserResponseDto(userEntity.getId(), userEntity.getEmail(), userEntity.getUsername(), userEntity.getPassword(), userEntity.getRole(), userEntity.getCreatedDate(), userEntity.getCreatedBy(), userEntity.getUpdatedDate(), userEntity.getUpdatedBy());
-			listUserDto.add(userDto);
+			if(userEntity.isLocked() == false) {
+				UserResponseDto userDto = new UserResponseDto(userEntity.getId(), userEntity.getEmail(), userEntity.getUsername(), userEntity.getPassword(), userEntity.getRole(), userEntity.getCreatedDate(), userEntity.getCreatedBy(), userEntity.getUpdatedDate(), userEntity.getUpdatedBy());
+				listUserDto.add(userDto);
+			}
 		}
-		return new ResponseCommon<>(200, true, "SUCCESS", listUserDto);
+		return new ResponseCommon<>(200, true, "FIND_ALL_USER_SUCCESS", listUserDto);
 	}
 
 	
@@ -92,8 +93,9 @@ public class UserServiceImpl implements UserService {
 	public ResponseCommon<?> deleteUser(String id) {
 		UserEntity user = userRepository.getById(id);
 		if(user != null) {
-			userRepository.deleteById(id);
-			return new ResponseCommon<>(200, true, "DELETE_SUCCESS");
+			user.setLocked(true);
+			saveUser(user);
+			return new ResponseCommon<>(200, true, "DELETE_USER_SUCCESS");
 		}
 		return new ResponseCommon<>(400, false, "USER_NOT_EXIST");
 	}

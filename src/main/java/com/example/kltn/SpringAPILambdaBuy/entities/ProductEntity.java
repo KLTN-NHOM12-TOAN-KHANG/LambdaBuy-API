@@ -69,6 +69,9 @@ public class ProductEntity {
 	@Column
 	private String updatedBy;
 	
+	@Column
+	private boolean isDeleted;
+	
 	@OneToMany(mappedBy = "product")
 	Set<OrderDetail> listOrderDetail;
 	
@@ -99,7 +102,7 @@ public class ProductEntity {
 
 	public ProductEntity(String id, String name, String description, double unitPrice, double discount, String image,
 			String status, int inStock, int yearOfManufacture, String country, boolean special, Date createdDate,
-			String createdBy, Date updatedDate, String updatedBy, Set<OrderDetail> listOrderDetail, AdminEntity admin,
+			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, Set<OrderDetail> listOrderDetail, AdminEntity admin,
 			CategoryEntity category, BrandEntity brand) {
 		super();
 		this.id = id;
@@ -117,6 +120,7 @@ public class ProductEntity {
 		this.createdBy = createdBy;
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
+		this.isDeleted = isDeleted;
 		this.listOrderDetail = listOrderDetail;
 		this.admin = admin;
 		this.category = category;
@@ -125,7 +129,7 @@ public class ProductEntity {
 
 	public ProductEntity(String name, String description, double unitPrice, double discount, String image,
 			String status, int inStock, int yearOfManufacture, String country, boolean special, Date createdDate,
-			String createdBy, Date updatedDate, String updatedBy, Set<OrderDetail> listOrderDetail, AdminEntity admin,
+			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, Set<OrderDetail> listOrderDetail, AdminEntity admin,
 			CategoryEntity category, BrandEntity brand) {
 		super();
 		this.name = name;
@@ -142,10 +146,30 @@ public class ProductEntity {
 		this.createdBy = createdBy;
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
+		this.isDeleted = isDeleted;
 		this.listOrderDetail = listOrderDetail;
 		this.admin = admin;
 		this.category = category;
 		this.brand = brand;
+	}
+
+	public ProductEntity(String name, String description, double unitPrice, double discount, String image,
+			String status, int inStock, int yearOfManufacture, String country, boolean special, Date createdDate,
+			String createdBy, boolean isDeleted) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.unitPrice = unitPrice;
+		this.discount = discount;
+		this.image = image;
+		this.status = status;
+		this.inStock = inStock;
+		this.yearOfManufacture = yearOfManufacture;
+		this.country = country;
+		this.special = special;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+		this.isDeleted = isDeleted;
 	}
 
 	public String getId() {
@@ -298,5 +322,37 @@ public class ProductEntity {
 
 	public void setBrand(BrandEntity brand) {
 		this.brand = brand;
+	}
+
+	public boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+	public Set<OrderDetail> getListOrderDetail() {
+		return listOrderDetail;
+	}
+
+	public void setListOrderDetail(Set<OrderDetail> listOrderDetail) {
+		this.listOrderDetail = listOrderDetail;
+	}
+
+	public CartEntity getCart() {
+		return cart;
+	}
+
+	public void setCart(CartEntity cart) {
+		this.cart = cart;
+	}
+
+	public SupplierEntity getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(SupplierEntity supplier) {
+		this.supplier = supplier;
 	}
 }
