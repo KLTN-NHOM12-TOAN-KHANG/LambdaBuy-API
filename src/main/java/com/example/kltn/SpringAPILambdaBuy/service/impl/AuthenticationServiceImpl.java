@@ -97,7 +97,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		confirmationTokenService.saveConfirmationToken(createToken);
 		
 		// Send mail
-		String link = "http://localhost:8000/api/authentication/register/confirm/" + createToken.getTokenCode();
+		String link = "http://localhost:8080/api/authentication/register/confirm/" + createToken.getToken();
+
 		mailSender.send(registerDto.getEmail(), buildEmail(
 					registerDto.getFirstName() + " " + registerDto.getLastName()
 					, link));

@@ -44,6 +44,11 @@ public class OrderEntity {
 	@JoinColumn(name = "admin_id")
 	private AdminEntity admin;
 	
+	@ManyToOne
+	@JoinColumn(name = "customer_id")
+	private CustomerEntity customer;
+	
+	
 	@OneToMany(mappedBy = "order")
 	Set<OrderDetail> listOrderDetail;
 
