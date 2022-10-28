@@ -17,15 +17,4 @@ import com.example.kltn.SpringAPILambdaBuy.service.SupplierService;
 public class SupplierController {
 	@Autowired
 	private SupplierService supplierService;
-	
-	@GetMapping("/suppliers/")
-	public ResponseCommon<List<SupplierEntity>> findAllSupplier() {
-		return supplierService.findAll();
-	}
-	
-	@GetMapping("/supplier/{id}")
-	public ResponseCommon<SupplierEntity> findById(@PathVariable("id") String id){
-		return supplierService.findById(id);
-	}
-	
 }
