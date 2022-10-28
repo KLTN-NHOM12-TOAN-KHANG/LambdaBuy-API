@@ -1,17 +1,23 @@
 package com.example.kltn.SpringAPILambdaBuy.service.impl;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Date;
 import java.util.HashSet;
+=======
+>>>>>>> 50fa5fcd6df2a340efd11e51abfb3b24bfe0ad79
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import com.example.kltn.SpringAPILambdaBuy.common.request.supplier.CreateSupplierDto;
 import com.example.kltn.SpringAPILambdaBuy.common.request.supplier.UpdateSupplierDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.common.response.SupplierResponseDto;
+=======
+>>>>>>> 50fa5fcd6df2a340efd11e51abfb3b24bfe0ad79
 import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.entities.SupplierEntity;
 import com.example.kltn.SpringAPILambdaBuy.repository.SupplierRepository;
@@ -24,6 +30,7 @@ public class SupplierServiceImpl implements SupplierService {
 	private SupplierRepository supplierRepository;
 	
 	@Override
+<<<<<<< HEAD
 	public ResponseCommon<?> findAll() {
 		List<SupplierEntity> suppliers = supplierRepository.findAll();
 		List<SupplierResponseDto> listSupplierDto = new ArrayList<>();
@@ -81,17 +88,60 @@ public class SupplierServiceImpl implements SupplierService {
 			return new ResponseCommon<>(200, true, "UPDATE_SUPPLIER_SUCCESS", updateSupplier);
 		}
 		return new ResponseCommon<>(400, false, "SUPPLIER_NOT_FOUND");
+=======
+	public ResponseCommon<List<SupplierEntity>> findAll() {
+		List<SupplierEntity> suppliers = supplierRepository.findAll();
+		List<SupplierEntity> listSupplier = new ArrayList<>();
+		for (SupplierEntity supplierEntity : suppliers) {
+			if(supplierEntity.getIsDeleted() == false) {
+				listSupplier.add(supplierEntity);
+			}
+		}
+		return new ResponseCommon<>(200, true, "SUCCESS", suppliers);
+	}
+
+	@Override
+	public ResponseCommon<SupplierEntity> findById(String id) {
+		SupplierEntity supplier = supplierRepository.findById(id).get();
+		if(supplier != null) {
+			return new ResponseCommon<>(200, true, "SUCCESS", supplier);
+		}
+		return new ResponseCommon<>(500, false, "SERVER_ERROR_INTERNAL");
+	}
+
+	@Override
+	public ResponseCommon<SupplierEntity> findByName(String name) {
+		SupplierEntity supplier = supplierRepository.findByName(name);
+		if(supplier != null) {
+			return new ResponseCommon<>(200, true, "SUCCESS", supplier);
+		}
+		return new ResponseCommon<>(500, false, "SERVER_ERROR_INTERNAL");
+	}
+
+	@Override
+	public void save(SupplierEntity supplier) {
+		supplierRepository.save(supplier);
+>>>>>>> 50fa5fcd6df2a340efd11e51abfb3b24bfe0ad79
 	}
 
 	@Override
 	public ResponseCommon<?> deleteById(String id) {
+<<<<<<< HEAD
 		SupplierEntity supplier = supplierRepository.findById(id).get();
+=======
+		SupplierEntity supplier = findById(id).data;
+>>>>>>> 50fa5fcd6df2a340efd11e51abfb3b24bfe0ad79
 		if(supplier == null) {
 			return new ResponseCommon<>(400, false, "SUPPLIER_NOT_FOUND");
 		}
 		supplier.setIsDeleted(true);
+<<<<<<< HEAD
 		supplierRepository.save(supplier);
 		return new ResponseCommon<>(200, true, "DELETE_SUPPLIER_SUCCESS");
+=======
+		save(supplier);
+		return new ResponseCommon<>(200, true, "DELETE_SUCCESS");
+>>>>>>> 50fa5fcd6df2a340efd11e51abfb3b24bfe0ad79
 	}
 
 }

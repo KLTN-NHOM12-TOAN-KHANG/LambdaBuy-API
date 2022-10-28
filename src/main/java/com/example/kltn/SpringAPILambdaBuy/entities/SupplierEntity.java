@@ -103,6 +103,13 @@ public class SupplierEntity {
 		this.isDeleted = isDeleted;
 	}
 
+<<<<<<< HEAD
+=======
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+>>>>>>> 50fa5fcd6df2a340efd11e51abfb3b24bfe0ad79
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -153,13 +160,22 @@ public class SupplierEntity {
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
 	}
+<<<<<<< HEAD
 	
 	public SupplierEntity(String name, String address, String description, Set<ProductEntity> listProduct, boolean isDeleted, Date createdDate, String createdBy) {
+=======
+
+	public SupplierEntity(String name, String address, String description, boolean isDeleted, Date createdDate,
+			String createdBy) {
+>>>>>>> 50fa5fcd6df2a340efd11e51abfb3b24bfe0ad79
 		super();
 		this.name = name;
 		this.address = address;
 		this.description = description;
+<<<<<<< HEAD
 		this.listProduct = listProduct;
+=======
+>>>>>>> 50fa5fcd6df2a340efd11e51abfb3b24bfe0ad79
 		this.isDeleted = isDeleted;
 		this.createdDate = createdDate;
 		this.createdBy = createdBy;
