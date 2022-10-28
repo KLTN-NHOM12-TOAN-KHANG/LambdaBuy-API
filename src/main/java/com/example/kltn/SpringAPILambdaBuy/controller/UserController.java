@@ -49,9 +49,9 @@ public class UserController {
 	}
 	
 	@PostMapping("/user/save")
-	public ResponseEntity<UserEntity> saveAccount(@RequestBody UserEntity user) {
-		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/account/save").toUriString());
-		return ResponseEntity.created(uri).body(userService.saveUser(user));
+	public ResponseEntity<ResponseCommon<?>> saveUser(@RequestBody UserEntity user) {
+		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
+		return ResponseEntity.created(uri).body(new ResponseCommon<>(200, true, "SAVE_USER_SUCCESS"));
 	}
 
 	@DeleteMapping("/user/{id}")

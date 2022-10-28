@@ -11,7 +11,7 @@ import com.example.kltn.SpringAPILambdaBuy.entities.UserEntity;
 public interface UserService {
 	UserEntity findByUsername(String username);
 	UserEntity findByEmail(String email);
-	UserEntity saveUser(UserEntity user);
+	void saveUser(UserEntity user);
 	UserEntity getUser(String username);
 	ResponseCommon<List<UserResponseDto>> getUsers();
 	ResponseCommon<?> deleteUser(String id);
