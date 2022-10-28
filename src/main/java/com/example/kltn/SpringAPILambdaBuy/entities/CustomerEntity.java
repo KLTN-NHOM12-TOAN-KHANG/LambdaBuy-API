@@ -1,11 +1,13 @@
 package com.example.kltn.SpringAPILambdaBuy.entities;
 
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -39,6 +41,9 @@ public class CustomerEntity {
 	
 	@OneToOne(mappedBy = "customer")
 	private CartEntity cart;
+	
+	@OneToMany(mappedBy = "customer")
+	private Set<OrderEntity> listOrder;
 
 	public CustomerEntity() {
 		super();
