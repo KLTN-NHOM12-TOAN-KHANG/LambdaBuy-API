@@ -98,6 +98,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		
 		// Send mail
 		String link = "http://localhost:8080/api/authentication/register/confirm/" + createToken.getToken();
+
 		mailSender.send(registerDto.getEmail(), buildEmail(
 					registerDto.getFirstName() + " " + registerDto.getLastName()
 					, link));
@@ -106,7 +107,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		return new ResponseCommon<>(200, true, "REGISTER_SUCCESS", createToken.toString());
 	}
 	
-
 	@Override
 	public ResponseCommon<?> login(LoginDto loginDto) {
 		UserEntity userName = userService.findByUsername(loginDto.getUsername());
