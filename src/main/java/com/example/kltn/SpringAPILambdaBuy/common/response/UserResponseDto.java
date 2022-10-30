@@ -14,6 +14,8 @@ public class UserResponseDto {
 	private String createdBy;
 	private Date updatedDate;
 	private String updatedBy;
+	private boolean isEnabled;
+	private boolean isLocked;
 	public String getId() {
 		return id;
 	}
@@ -69,6 +71,19 @@ public class UserResponseDto {
 	}
 	public void setRole(UserRole role) {
 		this.role = role;
+	}
+	
+	public boolean getIsEnabled() {
+		return isEnabled;
+	}
+	public void setIsEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+	public boolean getIsLocked() {
+		return isLocked;
+	}
+	public void setIsLocked(boolean isLocked) {
+		this.isLocked = isLocked;
 	}
 	public UserResponseDto(String id, String email, String username, String password, UserRole role, Date createdDate,
 			String createdBy, Date updatedDate, String updatedBy) {

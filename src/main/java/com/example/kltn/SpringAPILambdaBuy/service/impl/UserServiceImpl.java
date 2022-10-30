@@ -52,6 +52,10 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private EmailValidator emailValidator;
 	
+	@Override
+	public UserEntity findById(String id) {
+		return userRepository.findById(id).get();
+	}
 	
 	@Override
 	public UserEntity findByUsername(String username) {
@@ -79,10 +83,8 @@ public class UserServiceImpl implements UserService {
 		List<UserEntity> listUser = userRepository.findAll();
 		List<UserResponseDto> listUserDto = new ArrayList<>();
 		for (UserEntity userEntity : listUser) {
-			if(userEntity.isLocked() == false) {
-				UserResponseDto userDto = new UserResponseDto(userEntity.getId(), userEntity.getEmail(), userEntity.getUsername(), userEntity.getPassword(), userEntity.getRole(), userEntity.getCreatedDate(), userEntity.getCreatedBy(), userEntity.getUpdatedDate(), userEntity.getUpdatedBy());
-				listUserDto.add(userDto);
-			}
+			UserResponseDto userDto = new UserResponseDto(userEntity.getId(), userEntity.getEmail(), userEntity.getUsername(), userEntity.getPassword(), userEntity.getRole(), userEntity.getCreatedDate(), userEntity.getCreatedBy(), userEntity.getUpdatedDate(), userEntity.getUpdatedBy());
+			listUserDto.add(userDto);
 		}
 		return new ResponseCommon<>(200, true, "FIND_ALL_USER_SUCCESS", listUserDto);
 	}

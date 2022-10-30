@@ -9,6 +9,7 @@ import com.example.kltn.SpringAPILambdaBuy.common.response.UserResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserEntity;
 
 public interface UserService {
+	UserEntity findById(String id);
 	UserEntity findByUsername(String username);
 	UserEntity findByEmail(String email);
 	void saveUser(UserEntity user);
