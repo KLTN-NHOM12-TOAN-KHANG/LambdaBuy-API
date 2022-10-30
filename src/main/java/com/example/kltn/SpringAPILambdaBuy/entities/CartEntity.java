@@ -38,13 +38,8 @@ public class CartEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CartEntity(String id, int itemQuantity, boolean isEmpty, CustomerEntity customer,
-			Set<ProductEntity> listProduct) {
+	public CartEntity(Set<ProductEntity> listProduct) {
 		super();
-		this.id = id;
-		this.itemQuantity = itemQuantity;
-		this.isEmpty = isEmpty;
-		this.customer = customer;
 		this.listProduct = listProduct;
 	}
 
@@ -100,6 +95,10 @@ public class CartEntity {
 	}
 
 	public void setListOrderDetail(Set<ProductEntity> listProduct) {
+		this.listProduct = listProduct;
+	}
+
+	public void setListProduct(Set<ProductEntity> listProduct) {
 		this.listProduct = listProduct;
 	}
 }

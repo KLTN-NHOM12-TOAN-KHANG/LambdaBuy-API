@@ -3,6 +3,7 @@ package com.example.kltn.SpringAPILambdaBuy.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -85,7 +86,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		CustomerEntity customer = new CustomerEntity(registerDto.getFirstName(), registerDto.getLastName(), createUser);
 		customerService.save(customer);
 		
-		CartEntity cart = new CartEntity(0, false, customer);
+		CartEntity cart = new CartEntity(0, true, customer, new HashSet<>());
 		cartService.save(cart);
 		
 		createUser.setCustomer(null);
