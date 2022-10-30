@@ -34,14 +34,14 @@ public class UserController {
 		return ResponseEntity.ok().body(userService.getUsers());
 	}
 	
-	@GetMapping("/user/{username}")
+	@GetMapping("/user/name/{username}")
 	public ResponseEntity<ResponseCommon<UserResponseDto>> getUserByUsername(@PathVariable("username") String username){
 		UserEntity user = userService.findByUsername(username);
 		UserResponseDto userDto = new UserResponseDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(), user.getRole(), user.getCreatedDate(), user.getCreatedBy(), user.getUpdatedDate(), user.getUpdatedBy());
 		return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "SUCCESS", userDto));
 	}
 	
-	@GetMapping("/user/{email}")
+	@GetMapping("/user/email/{email}")
 	public ResponseEntity<ResponseCommon<UserResponseDto>> getUserByEmail(@PathVariable("email") String email){
 		UserEntity user = userService.findByEmail(email);
 		UserResponseDto userDto = new UserResponseDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(), user.getRole(), user.getCreatedDate(), user.getCreatedBy(), user.getUpdatedDate(), user.getUpdatedBy());
@@ -51,6 +51,7 @@ public class UserController {
 	@PostMapping("/user/save")
 	public ResponseEntity<ResponseCommon<?>> saveUser(@RequestBody UserEntity user) {
 		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
+		userService.saveUser(user);
 		return ResponseEntity.created(uri).body(new ResponseCommon<>(200, true, "SAVE_USER_SUCCESS"));
 	}
 

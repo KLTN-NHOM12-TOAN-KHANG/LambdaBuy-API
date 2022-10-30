@@ -83,6 +83,10 @@ public class UserResponseDto {
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
 	}
+	public UserResponseDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 }
