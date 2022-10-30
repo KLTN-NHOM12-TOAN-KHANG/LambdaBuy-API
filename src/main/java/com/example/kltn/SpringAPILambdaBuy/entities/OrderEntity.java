@@ -39,14 +39,14 @@ public class OrderEntity {
 	@OneToOne
 	@JoinColumn(name = "payment_id")
 	private PaymentEntity payment;
-	
+	/*
 	@ManyToOne
 	@JoinColumn(name = "admin_id")
 	private AdminEntity admin;
-	
+	*/
 	@ManyToOne
-	@JoinColumn(name = "customer_id")
-	private CustomerEntity customer;
+	@JoinColumn(name = "profile_id")
+	private ProfileEntity profile;
 	
 	
 	@OneToMany(mappedBy = "order")
@@ -58,7 +58,7 @@ public class OrderEntity {
 	}
 
 	public OrderEntity(String id, Date shippedDate, String shippedAddress, String status, double total,
-			String description, PaymentEntity payment, AdminEntity admin, Set<OrderDetail> listOrderDetail) {
+			String description, PaymentEntity payment, Set<OrderDetail> listOrderDetail) {
 		super();
 		this.id = id;
 		this.shippedDate = shippedDate;
@@ -67,12 +67,11 @@ public class OrderEntity {
 		this.total = total;
 		this.description = description;
 		this.payment = payment;
-		this.admin = admin;
 		this.listOrderDetail = listOrderDetail;
 	}
 
 	public OrderEntity(Date shippedDate, String shippedAddress, String status, double total, String description,
-			PaymentEntity payment, AdminEntity admin, Set<OrderDetail> listOrderDetail) {
+			PaymentEntity payment, Set<OrderDetail> listOrderDetail) {
 		super();
 		this.shippedDate = shippedDate;
 		this.shippedAddress = shippedAddress;
@@ -80,7 +79,6 @@ public class OrderEntity {
 		this.total = total;
 		this.description = description;
 		this.payment = payment;
-		this.admin = admin;
 		this.listOrderDetail = listOrderDetail;
 	}
 
@@ -139,7 +137,7 @@ public class OrderEntity {
 	public void setPayment(PaymentEntity payment) {
 		this.payment = payment;
 	}
-
+/*
 	public AdminEntity getAdmin() {
 		return admin;
 	}
@@ -147,7 +145,7 @@ public class OrderEntity {
 	public void setAdmin(AdminEntity admin) {
 		this.admin = admin;
 	}
-
+*/
 	public Set<OrderDetail> getOrderDetails() {
 		return listOrderDetail;
 	}

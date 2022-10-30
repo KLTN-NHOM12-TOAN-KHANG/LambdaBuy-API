@@ -18,7 +18,7 @@ public class ProductResponseDto {
 	private String image;
 	private String status;
 	private int inStock;
-	private int yearOfManufacture;
+	private Date ManufacturedDate;
 	private String country;
 	private boolean special;
 	private Date createdDate;
@@ -74,12 +74,7 @@ public class ProductResponseDto {
 	public void setInStock(int inStock) {
 		this.inStock = inStock;
 	}
-	public int getYearOfManufacture() {
-		return yearOfManufacture;
-	}
-	public void setYearOfManufacture(int yearOfManufacture) {
-		this.yearOfManufacture = yearOfManufacture;
-	}
+	
 	public String getCountry() {
 		return country;
 	}
@@ -129,7 +124,7 @@ public class ProductResponseDto {
 		// TODO Auto-generated constructor stub
 	}
 	public ProductResponseDto(String name, String description, double unitPrice, double discount, String image,
-			String status, int inStock, int yearOfManufacture, String country, boolean special, Date createdDate,
+			String status, int inStock, Date ManufacturedDate, String country, boolean special, Date createdDate,
 			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted) {
 		super();
 		this.name = name;
@@ -139,7 +134,7 @@ public class ProductResponseDto {
 		this.image = image;
 		this.status = status;
 		this.inStock = inStock;
-		this.yearOfManufacture = yearOfManufacture;
+		this.ManufacturedDate = ManufacturedDate;
 		this.country = country;
 		this.special = special;
 		this.createdDate = createdDate;

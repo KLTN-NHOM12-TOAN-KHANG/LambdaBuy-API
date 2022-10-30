@@ -27,8 +27,8 @@ public class CartEntity {
 	private boolean isEmpty;
 
 	@OneToOne
-	@JoinColumn(name = "customer_id")
-	private CustomerEntity customer;
+	@JoinColumn(name = "profile_id")
+	private ProfileEntity profile;
 	
 	@OneToMany(mappedBy = "cart")
 	private Set<ProductEntity> listProduct;
@@ -43,19 +43,19 @@ public class CartEntity {
 		this.listProduct = listProduct;
 	}
 
-	public CartEntity(int itemQuantity, boolean isEmpty, CustomerEntity customer, Set<ProductEntity> listProduct) {
+	public CartEntity(int itemQuantity, boolean isEmpty, ProfileEntity profile, Set<ProductEntity> listProduct) {
 		super();
 		this.itemQuantity = itemQuantity;
 		this.isEmpty = isEmpty;
-		this.customer = customer;
+		this.profile = profile;
 		this.listProduct = listProduct;
 	}
 	
-	public CartEntity(int itemQuantity, boolean isEmpty, CustomerEntity customer) {
+	public CartEntity(int itemQuantity, boolean isEmpty, ProfileEntity profile) {
 		super();
 		this.itemQuantity = itemQuantity;
 		this.isEmpty = isEmpty;
-		this.customer = customer;
+		this.profile = profile;
 	}
 
 	public String getId() {
@@ -82,12 +82,12 @@ public class CartEntity {
 		this.isEmpty = isEmpty;
 	}
 
-	public CustomerEntity getCustomer() {
-		return customer;
+	public ProfileEntity getProfile() {
+		return profile;
 	}
 
-	public void setCustomer(CustomerEntity customer) {
-		this.customer = customer;
+	public void setProfile(ProfileEntity profile) {
+		this.profile = profile;
 	}
 
 	public Set<ProductEntity> getListProduct() {

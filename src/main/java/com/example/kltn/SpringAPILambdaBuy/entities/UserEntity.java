@@ -75,11 +75,11 @@ public class UserEntity implements UserDetails {
 	private String updatedBy;
 	
 	@OneToOne(mappedBy = "user")
-	private CustomerEntity customer;
-	
+	private ProfileEntity profile;
+	/*
 	@OneToOne(mappedBy = "user")
 	private AdminEntity admin;
-	
+	*/
 	@OneToMany(mappedBy = "user")
 	private Set<PaymentEntity> listPayment;
 
@@ -175,14 +175,14 @@ public class UserEntity implements UserDetails {
 		this.updatedBy = updatedBy;
 	}
 
-	public CustomerEntity getCustomer() {
-		return customer;
+	public ProfileEntity getProfile() {
+		return profile;
 	}
 
-	public void setCustomer(CustomerEntity customer) {
-		this.customer = customer;
+	public void setProfile(ProfileEntity profile) {
+		this.profile = profile;
 	}
-
+/*
 	public AdminEntity getAdmin() {
 		return admin;
 	}
@@ -190,7 +190,7 @@ public class UserEntity implements UserDetails {
 	public void setAdmin(AdminEntity admin) {
 		this.admin = admin;
 	}
-
+*/
 	public Set<PaymentEntity> getListPayment() {
 		return listPayment;
 	}

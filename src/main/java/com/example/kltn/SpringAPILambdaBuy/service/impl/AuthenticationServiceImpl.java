@@ -21,7 +21,7 @@ import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.common.response.UserResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.entities.CartEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.ConfirmationTokenEntity;
-import com.example.kltn.SpringAPILambdaBuy.entities.CustomerEntity;
+import com.example.kltn.SpringAPILambdaBuy.entities.ProfileEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserRole;
 import com.example.kltn.SpringAPILambdaBuy.repository.UserRepository;
@@ -83,14 +83,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		UserEntity createUser = new UserEntity(registerDto.getUsername(), registerDto.getEmail(), encodePassword, UserRole.CUSTOMER, new Date(), registerDto.getFirstName() + " " + registerDto.getLastName());
 		userService.saveUser(createUser);
 		
-		CustomerEntity customer = new CustomerEntity(registerDto.getFirstName(), registerDto.getLastName(), createUser);
+		ProfileEntity customer = new ProfileEntity(registerDto.getFirstName(), registerDto.getLastName(), createUser);
 		customerService.save(customer);
 		
 		CartEntity cart = new CartEntity(0, true, customer, new HashSet<>());
 		cartService.save(cart);
 		
-		createUser.setCustomer(null);
-		createUser.setAdmin(null); 
+		createUser.setProfile(null);
+		//createUser.setAdmin(null); 
 		
 		// Send confirmation token
 		String token = UUID.randomUUID().toString();
