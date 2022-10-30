@@ -9,12 +9,14 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.kltn.SpringAPILambdaBuy.common.request.cart.CreateCartDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ProductResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.entities.CartEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.ProductEntity;
 import com.example.kltn.SpringAPILambdaBuy.repository.CartRepository;
 import com.example.kltn.SpringAPILambdaBuy.service.CartService;
+import com.example.kltn.SpringAPILambdaBuy.service.ProductService;
 
 @Service
 @Transactional
@@ -22,6 +24,9 @@ public class CartServiceImpl implements CartService {
 
 	@Autowired
 	private CartRepository cartRepository;
+	
+	@Autowired
+	private ProductService productService;
 
 	@Override
 	public ResponseCommon<?> getAllProductInCart(String cardId) {
@@ -44,41 +49,52 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public ResponseCommon<?> addProductToCart(String productId, int quantity) {
+	public ResponseCommon<?> addProductToCart(String cartId, String productId) {
+		CartEntity cart = cartRepository.findById(cartId).get();
+		Set<ProductEntity> listProduct = cart.getListProduct();
 		
-		return null;
+		ProductEntity product = productService.findById(productId);
+		listProduct.add(product);
+		cart.setListProduct(listProduct);
+		cartRepository.save(cart);
+		
+		product.setIsEnabled(false);
+		productService.save(product);
+		
+		return new ResponseCommon<>(200, true, "ADD_PRODUCT_TO_CART_SUCCESS");
 	}
 
 	@Override
-	public ResponseCommon<?> removeProductToCart(String productId, int quantity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResponseCommon<?> updateProductToCart(String productId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResponseCommon<?> checkQuantityInStock(String productId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResponseCommon<?> caculateTotalMonney(List<ProductEntity> listProduct) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResponseCommon<?> addDiscount(float discount) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseCommon<?> removeProductToCart(String cartId, String productId) {
+		CartEntity cart = cartRepository.findById(cartId).get();
+		Set<ProductEntity> listProduct = cart.getListProduct();
+		
+		ProductEntity product = productService.findById(productId);
+		listProduct.remove(product);
+		
+		cart.setListProduct(listProduct);
+		cartRepository.save(cart);
+		
+		product.setIsEnabled(true);
+		productService.save(product);
+		return new ResponseCommon<>(200, true, "REMOVE_PRODUCT_TO_CART_SUCCESS");
 	}
 	
-	
+	@Override
+	public ResponseCommon<?> addQuantityInCart(String cartId, String productId, int quantity) {
+		ProductEntity product = productService.findById(productId);
+		if(quantity >= product.getInStock()) {
+			return new ResponseCommon<>(400, false, "GREATE_THAN_STOCK");
+		}
+		return new ResponseCommon<>(200, true, "SUCCESS");
+	}
 
+	@Override
+	public ResponseCommon<?> subQuantityInCart(String cartId, String productId, int quantity) {
+		ProductEntity product = productService.findById(productId);
+		if(quantity <= 1) {
+			removeProductToCart(cartId, productId);
+		}
+		return new ResponseCommon<>(200, true, "SUCCESS");
+	}
 }
