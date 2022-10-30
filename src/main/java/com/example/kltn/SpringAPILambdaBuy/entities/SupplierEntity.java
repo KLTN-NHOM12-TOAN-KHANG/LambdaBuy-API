@@ -167,6 +167,13 @@ public class SupplierEntity {
 		this.createdDate = createdDate;
 		this.createdBy = createdBy;
 	}
+	public SupplierEntity(String name, String address, String description) {
+		super();
+		this.address = address;
+		this.description = description;
+		this.name = name;
+
+	}
 	
 	
 	
