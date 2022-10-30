@@ -43,5 +43,19 @@ public class RegisterDto {
 	public void setRePassword(String rePassword) {
 		this.rePassword = rePassword;
 	}
+	public RegisterDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public RegisterDto(String firstName, String lastName, String email, String username, String password,
+			String rePassword) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.rePassword = rePassword;
+	}
 	
 }

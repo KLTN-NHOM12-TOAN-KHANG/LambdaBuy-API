@@ -8,6 +8,11 @@ public class ResponseCommon<T> {
     public T data;
     
     
+	public ResponseCommon() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public ResponseCommon(boolean success, int code, String message, String errorMessage, T data) {
 		super();
 		this.success = success;
@@ -61,5 +66,12 @@ public class ResponseCommon<T> {
 	}
 	public void setData(T data) {
 		this.data = data;
+	}
+
+	@Override
+	public String toString() {
+		return "ResponseCommon [success=" + success + ", code=" + code + ", message=" + message + ", errorMessage="
+				+ errorMessage + ", data=" + data + "]";
 	}    
+	
 }

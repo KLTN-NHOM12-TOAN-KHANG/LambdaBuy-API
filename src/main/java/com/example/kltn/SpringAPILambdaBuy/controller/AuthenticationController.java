@@ -28,12 +28,12 @@ public class AuthenticationController {
 		return new ResponseEntity<ResponseCommon<?>>(authenticationService.confirmToken(token_code), HttpStatus.OK);
 	}
 	
-	@PostMapping("/register/")
+	@PostMapping("/register")
 	public ResponseEntity<ResponseCommon<?>> register (@RequestBody RegisterDto registerDto){
 		return new ResponseEntity<ResponseCommon<?>>(authenticationService.register(registerDto), HttpStatus.OK);
 	}
 	
-	@PostMapping("/login/")
+	@PostMapping("/login")
 	public ResponseEntity<ResponseCommon<?>> login (@RequestBody LoginDto loginDto) {
 		return new ResponseEntity<ResponseCommon<?>>(authenticationService.login(loginDto), HttpStatus.OK);
 	}

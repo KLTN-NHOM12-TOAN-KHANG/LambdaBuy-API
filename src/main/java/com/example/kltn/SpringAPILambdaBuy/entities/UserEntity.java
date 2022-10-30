@@ -31,6 +31,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.kltn.SpringAPILambdaBuy.utils.CustomAuthorityDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 @Entity
 @Table(name = "user")
 public class UserEntity implements UserDetails {
@@ -80,6 +83,7 @@ public class UserEntity implements UserDetails {
 	@OneToMany(mappedBy = "user")
 	private Set<PaymentEntity> listPayment;
 
+	@JsonDeserialize(using = CustomAuthorityDeserializer.class)
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
