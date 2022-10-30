@@ -34,6 +34,13 @@ public class UserController {
 		return ResponseEntity.ok().body(userService.getUsers());
 	}
 	
+	@GetMapping("/user/{id}")
+	public ResponseEntity<ResponseCommon<UserResponseDto>> getUserById(@PathVariable("id") String id){
+		UserEntity user = userService.findById(id);
+		UserResponseDto userDto = new UserResponseDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(), user.getRole(), user.getCreatedDate(), user.getCreatedBy(), user.getUpdatedDate(), user.getUpdatedBy());
+		return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "SUCCESS", userDto));
+	}
+	
 	@GetMapping("/user/name/{username}")
 	public ResponseEntity<ResponseCommon<UserResponseDto>> getUserByUsername(@PathVariable("username") String username){
 		UserEntity user = userService.findByUsername(username);
@@ -55,8 +62,8 @@ public class UserController {
 		return ResponseEntity.created(uri).body(new ResponseCommon<>(200, true, "SAVE_USER_SUCCESS"));
 	}
 
-	@DeleteMapping("/user/{id}")
-	public ResponseEntity<ResponseCommon<?>> deleteUser(@RequestParam("id") String id){
+	@GetMapping("/user/delete/{id}")
+	public ResponseEntity<ResponseCommon<?>> deleteUser(@PathVariable("id") String id){
 		return new ResponseEntity<ResponseCommon<?>>(userService.deleteUser(id), HttpStatus.OK);
 	} 
 }
