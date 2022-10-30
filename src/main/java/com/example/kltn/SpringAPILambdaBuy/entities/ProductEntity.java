@@ -44,14 +44,14 @@ public class ProductEntity {
 	private String status;
 	
 	@Column
-	private int inStock;
-	
-	@Column
-	private int yearOfManufacture;
+	private int quantity;
 	
 	@Column()
 	private String country;
 	
+	@Column
+	private Date manufacturedDate;
+
 	@Column()
 	private boolean special;
 	
@@ -74,13 +74,9 @@ public class ProductEntity {
 	
 	@Column
 	private boolean isDeleted;
-	
+
 	@OneToMany(mappedBy = "product")
 	Set<OrderDetail> listOrderDetail;
-	
-	@ManyToOne
-	@JoinColumn(name = "admin_id")
-	private AdminEntity admin;
 	
 	@ManyToOne
 	@JoinColumn(name = "cart_id")
@@ -104,8 +100,8 @@ public class ProductEntity {
 	}
 
 	public ProductEntity(String id, String name, String description, double unitPrice, double discount, String image,
-			String status, int inStock, int yearOfManufacture, String country, boolean special, Date createdDate,
-			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, boolean isEnabled, Set<OrderDetail> listOrderDetail, AdminEntity admin,
+			String status, int quantity, Date manufacturedDate, String country, boolean special, Date createdDate,
+			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, boolean isEnabled, Set<OrderDetail> listOrderDetail,
 			CategoryEntity category, BrandEntity brand) {
 		super();
 		this.id = id;
@@ -115,8 +111,8 @@ public class ProductEntity {
 		this.discount = discount;
 		this.image = image;
 		this.status = status;
-		this.inStock = inStock;
-		this.yearOfManufacture = yearOfManufacture;
+		this.quantity = quantity;
+		this.manufacturedDate = manufacturedDate;
 		this.country = country;
 		this.special = special;
 		this.createdDate = createdDate;
@@ -126,14 +122,11 @@ public class ProductEntity {
 		this.isDeleted = isDeleted;
 		this.isEnabled = isEnabled;
 		this.listOrderDetail = listOrderDetail;
-		this.admin = admin;
-		this.category = category;
-		this.brand = brand;
 	}
 
 	public ProductEntity(String name, String description, double unitPrice, double discount, String image,
-			String status, int inStock, int yearOfManufacture, String country, boolean special, Date createdDate,
-			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, boolean isEnabled, Set<OrderDetail> listOrderDetail, AdminEntity admin,
+			String status, int quantity, Date manufacturedDate, String country, boolean special, Date createdDate,
+			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, boolean isEnabled, Set<OrderDetail> listOrderDetail,
 			CategoryEntity category, BrandEntity brand) {
 		super();
 		this.name = name;
@@ -142,8 +135,8 @@ public class ProductEntity {
 		this.discount = discount;
 		this.image = image;
 		this.status = status;
-		this.inStock = inStock;
-		this.yearOfManufacture = yearOfManufacture;
+		this.quantity = quantity;
+		this.manufacturedDate = manufacturedDate;
 		this.country = country;
 		this.special = special;
 		this.createdDate = createdDate;
@@ -153,29 +146,27 @@ public class ProductEntity {
 		this.isDeleted = isDeleted;
 		this.isEnabled = isEnabled;
 		this.listOrderDetail = listOrderDetail;
-		this.admin = admin;
 		this.category = category;
 		this.brand = brand;
 	}
 
-	public ProductEntity(String name, String description, double unitPrice, double discount, String image,
-			String status, int inStock, int yearOfManufacture, String country, boolean special, Date createdDate,
-			String createdBy, boolean isDeleted, boolean isEnabled) {
+	public ProductEntity(String name,String country,double unitPrice, String image, Date manufacturedDate , boolean isEnabled,CategoryEntity category, BrandEntity brand,SupplierEntity supplier,int quantity, double discount,
+			String status, String description) {
 		super();
 		this.name = name;
-		this.description = description;
 		this.unitPrice = unitPrice;
-		this.discount = discount;
 		this.image = image;
-		this.status = status;
-		this.inStock = inStock;
-		this.yearOfManufacture = yearOfManufacture;
-		this.country = country;
-		this.special = special;
-		this.createdDate = createdDate;
-		this.createdBy = createdBy;
-		this.isDeleted = isDeleted;
+		this.manufacturedDate = manufacturedDate;
 		this.isEnabled = isEnabled;
+		this.category = category;
+		this.brand = brand;
+		this.supplier=supplier;
+		this.description = description;
+		this.quantity=quantity;
+		this.discount = discount;
+		this.status = status;
+		this.country = country;
+	
 	}
 
 	public String getId() {
@@ -234,22 +225,14 @@ public class ProductEntity {
 		this.status = status;
 	}
 
-	public int getInStock() {
-		return inStock;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setInStock(int inStock) {
-		this.inStock = inStock;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
-
-	public int getYearOfManufacture() {
-		return yearOfManufacture;
-	}
-
-	public void setYearOfManufacture(int yearOfManufacture) {
-		this.yearOfManufacture = yearOfManufacture;
-	}
-
+	
 	public String getCountry() {
 		return country;
 	}
@@ -306,14 +289,6 @@ public class ProductEntity {
 		this.listOrderDetail = listOrderDetail;
 	}
 
-	public AdminEntity getAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(AdminEntity admin) {
-		this.admin = admin;
-	}
-
 	public CategoryEntity getCategory() {
 		return category;
 	}
@@ -328,14 +303,6 @@ public class ProductEntity {
 
 	public void setBrand(BrandEntity brand) {
 		this.brand = brand;
-	}
-
-	public boolean getIsDeleted() {
-		return isDeleted;
-	}
-
-	public void setIsDeleted(boolean isDeleted) {
-		this.isDeleted = isDeleted;
 	}
 
 	public Set<OrderDetail> getListOrderDetail() {
@@ -362,13 +329,28 @@ public class ProductEntity {
 		this.supplier = supplier;
 	}
 
-	public boolean geIsEnabled() {
+	
+	public boolean isEnabled() {
 		return isEnabled;
 	}
 
-	public void setIsEnabled(boolean isEnabled) {
+	public void setEnabled(boolean isEnabled) {
 		this.isEnabled = isEnabled;
 	}
+
 	
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 	
+	public Date getManufacturedDate() {
+		return manufacturedDate;
+	}
+	public void setManufacturedDate(Date manufacturedDate) {
+		this.manufacturedDate = manufacturedDate;
+	}
 }

@@ -2,14 +2,14 @@ package com.example.kltn.SpringAPILambdaBuy.common.request.cart;
 
 import java.util.Set;
 
-import com.example.kltn.SpringAPILambdaBuy.entities.CustomerEntity;
+import com.example.kltn.SpringAPILambdaBuy.entities.ProfileEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.ProductEntity;
 
 public class UpdateCartDto {
 	private String id;
 	private int itemQuantity;
 	private boolean isEmpty;
-	private CustomerEntity customer;
+	private ProfileEntity customer;
 	private Set<ProductEntity> listProduct;
 	public String getId() {
 		return id;
@@ -29,10 +29,10 @@ public class UpdateCartDto {
 	public void setEmpty(boolean isEmpty) {
 		this.isEmpty = isEmpty;
 	}
-	public CustomerEntity getCustomer() {
+	public ProfileEntity getCustomer() {
 		return customer;
 	}
-	public void setCustomer(CustomerEntity customer) {
+	public void setCustomer(ProfileEntity customer) {
 		this.customer = customer;
 	}
 	public Set<ProductEntity> getListProduct() {
@@ -45,7 +45,7 @@ public class UpdateCartDto {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public UpdateCartDto(String id, int itemQuantity, boolean isEmpty, CustomerEntity customer,
+	public UpdateCartDto(String id, int itemQuantity, boolean isEmpty, ProfileEntity customer,
 			Set<ProductEntity> listProduct) {
 		super();
 		this.id = id;

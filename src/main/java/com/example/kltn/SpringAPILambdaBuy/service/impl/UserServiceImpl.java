@@ -21,7 +21,7 @@ import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.common.response.UserResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.entities.CartEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.ConfirmationTokenEntity;
-import com.example.kltn.SpringAPILambdaBuy.entities.CustomerEntity;
+import com.example.kltn.SpringAPILambdaBuy.entities.ProfileEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserRole;
 import com.example.kltn.SpringAPILambdaBuy.repository.UserRepository;

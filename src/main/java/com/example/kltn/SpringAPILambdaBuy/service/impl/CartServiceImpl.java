@@ -35,7 +35,7 @@ public class CartServiceImpl implements CartService {
 			Set<ProductEntity> listProduct = card.getListProduct();
 			Set<ProductResponseDto> listProductDto = new HashSet<>();
 			for (ProductEntity productEntity : listProduct) {
-				ProductResponseDto productDto = new ProductResponseDto(productEntity.getName(), productEntity.getDescription(), productEntity.getUnitPrice(), productEntity.getDiscount(), productEntity.getImage(), productEntity.getStatus(), productEntity.getInStock(), productEntity.getYearOfManufacture(), productEntity.getCountry(), productEntity.isSpecial(), productEntity.getCreatedDate(), productEntity.getCreatedBy(), productEntity.getUpdatedDate(), productEntity.getUpdatedBy(), productEntity.getIsDeleted());
+				ProductResponseDto productDto = new ProductResponseDto(productEntity.getName(), productEntity.getDescription(), productEntity.getUnitPrice(), productEntity.getDiscount(), productEntity.getImage(), productEntity.getStatus(), productEntity.getQuantity(), productEntity.getManufacturedDate(), productEntity.getCountry(), productEntity.isSpecial(), productEntity.getCreatedDate(), productEntity.getCreatedBy(), productEntity.getUpdatedDate(), productEntity.getUpdatedBy(), productEntity.isDeleted());
 				listProductDto.add(productDto);
 			}
 			return new ResponseCommon<>(200, true, "GET_PRODUCT_IN_CART_SUCCESS", listProductDto);
@@ -58,7 +58,7 @@ public class CartServiceImpl implements CartService {
 		cart.setListProduct(listProduct);
 		cartRepository.save(cart);
 		
-		product.setIsEnabled(false);
+		product.setEnabled(false);
 		productService.save(product);
 		
 		return new ResponseCommon<>(200, true, "ADD_PRODUCT_TO_CART_SUCCESS");
@@ -75,7 +75,7 @@ public class CartServiceImpl implements CartService {
 		cart.setListProduct(listProduct);
 		cartRepository.save(cart);
 		
-		product.setIsEnabled(true);
+		product.setEnabled(true);
 		productService.save(product);
 		return new ResponseCommon<>(200, true, "REMOVE_PRODUCT_TO_CART_SUCCESS");
 	}
@@ -83,7 +83,7 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public ResponseCommon<?> addQuantityInCart(String cartId, String productId, int quantity) {
 		ProductEntity product = productService.findById(productId);
-		if(quantity >= product.getInStock()) {
+		if(quantity >= product.getQuantity()) {
 			return new ResponseCommon<>(400, false, "GREATE_THAN_STOCK");
 		}
 		return new ResponseCommon<>(200, true, "SUCCESS");

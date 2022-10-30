@@ -1,7 +1,7 @@
 package com.example.kltn.SpringAPILambdaBuy.service;
 
-import com.example.kltn.SpringAPILambdaBuy.entities.CustomerEntity;
+import com.example.kltn.SpringAPILambdaBuy.entities.ProfileEntity;
 
 public interface CustomerService {
-	CustomerEntity save(CustomerEntity customer);
+	ProfileEntity save(ProfileEntity customer);
 }

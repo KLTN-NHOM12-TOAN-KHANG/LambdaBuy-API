@@ -15,8 +15,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "customer")
-public class CustomerEntity {
+@Table(name = "profile")
+public class ProfileEntity {
 	@Id
 	private String id = UUID.randomUUID().toString();
 	
@@ -39,18 +39,18 @@ public class CustomerEntity {
 	@JoinColumn(name = "user_id")
 	private UserEntity user;
 	
-	@OneToOne(mappedBy = "customer")
+	@OneToOne(mappedBy = "profile")
 	private CartEntity cart;
 	
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = "profile")
 	private Set<OrderEntity> listOrder;
 
-	public CustomerEntity() {
+	public ProfileEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CustomerEntity(String id, String phoneNumber, String address, String avatar, String firstName,
+	public ProfileEntity(String id, String phoneNumber, String address, String avatar, String firstName,
 			String lastName, UserEntity user, CartEntity cart) {
 		super();
 		this.id = id;
@@ -63,7 +63,7 @@ public class CustomerEntity {
 		this.cart = cart;
 	}
 
-	public CustomerEntity(String phoneNumber, String address, String avatar, String firstName, String lastName,
+	public ProfileEntity(String phoneNumber, String address, String avatar, String firstName, String lastName,
 			UserEntity user, CartEntity cart) {
 		super();
 		this.phoneNumber = phoneNumber;
@@ -76,7 +76,7 @@ public class CustomerEntity {
 	}
 	
 
-	public CustomerEntity(String firstName, String lastName, UserEntity user) {
+	public ProfileEntity(String firstName, String lastName, UserEntity user) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
