@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.kltn.SpringAPILambdaBuy.common.data.ConstantGlobal;
 import com.example.kltn.SpringAPILambdaBuy.common.interfaces.MailSender;
 import com.example.kltn.SpringAPILambdaBuy.common.request.LoginDto;
 import com.example.kltn.SpringAPILambdaBuy.common.request.RegisterDto;
@@ -61,6 +62,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	
 	List<UserResponseDto> listUserDto = new ArrayList<>();
 	
+	
+	@Override
+	public ResponseCommon<?> seedAdmin() {
+		List<RegisterDto> listAdmin = ConstantGlobal.listAdmin;
+		List<UserResponseDto> listUserDto = new ArrayList();
+		for (RegisterDto registerDto : listAdmin) {
+			String encodePassword = bCryptPasswordEncoder.encode(registerDto.getPassword());
+			UserEntity createUser = new UserEntity(registerDto.getUsername(), registerDto.getEmail(), encodePassword, true, UserRole.ADMIN, new Date(), registerDto.getFirstName() + " " + registerDto.getLastName());
+			userService.saveUser(createUser);
+			UserResponseDto userDto = new UserResponseDto(createUser.getId(), createUser.getEmail(), createUser.getUsername(), createUser.getPassword(), createUser.getRole(),  createUser.getCreatedDate(), createUser.getCreatedBy(), createUser.getUpdatedDate(), createUser.getUpdatedBy());
+			listUserDto.add(userDto);
+		}
+		return new ResponseCommon<>(200, true, "SEED_ADMIN_SUCCESS", listUserDto);
+	}
 	
 	@Override
 	public ResponseCommon<?> register(RegisterDto registerDto) {

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
@@ -54,7 +55,12 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserEntity findById(String id) {
-		return userRepository.findById(id).get();
+		if(id == null) {
+			return null;
+		}
+		return userRepository.findById(id).isPresent()
+				? userRepository.findById(id).get()
+				: null;
 	}
 	
 	@Override
