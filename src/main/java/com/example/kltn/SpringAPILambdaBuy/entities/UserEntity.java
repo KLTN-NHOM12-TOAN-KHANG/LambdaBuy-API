@@ -229,6 +229,19 @@ public class UserEntity implements UserDetails {
 		this.createdDate = createdDate;
 		this.createdBy = createdBy;
 	}
+	
+
+	public UserEntity(String username, String email, String password, boolean enabled, UserRole role, Date createdDate,
+			String createdBy) {
+		super();
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.enabled = enabled;
+		this.role = role;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+	}
 
 	public UserEntity() {
 		super();

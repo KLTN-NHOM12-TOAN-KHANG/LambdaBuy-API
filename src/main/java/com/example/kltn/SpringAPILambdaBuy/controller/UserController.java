@@ -37,8 +37,11 @@ public class UserController {
 	@GetMapping("/user/{id}")
 	public ResponseEntity<ResponseCommon<UserResponseDto>> getUserById(@PathVariable("id") String id){
 		UserEntity user = userService.findById(id);
-		UserResponseDto userDto = new UserResponseDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(), user.getRole(), user.getCreatedDate(), user.getCreatedBy(), user.getUpdatedDate(), user.getUpdatedBy());
-		return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "SUCCESS", userDto));
+		if(user != null) {
+			UserResponseDto userDto = new UserResponseDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(), user.getRole(), user.getCreatedDate(), user.getCreatedBy(), user.getUpdatedDate(), user.getUpdatedBy());
+			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "SUCCESS", userDto));
+		}
+		return ResponseEntity.ok().body(new ResponseCommon<>(400, false, "USER_NOT_FOUND"));
 	}
 	
 	@GetMapping("/user/name/{username}")

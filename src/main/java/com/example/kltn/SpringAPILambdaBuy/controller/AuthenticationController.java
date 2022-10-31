@@ -28,6 +28,11 @@ public class AuthenticationController {
 		return new ResponseEntity<ResponseCommon<?>>(authenticationService.confirmToken(token_code), HttpStatus.OK);
 	}
 	
+	@PostMapping("/seed-admin")
+	public ResponseEntity<ResponseCommon<?>> seedAdmin (){
+		return new ResponseEntity<ResponseCommon<?>>(authenticationService.seedAdmin(), HttpStatus.OK);
+	}
+	
 	@PostMapping("/register")
 	public ResponseEntity<ResponseCommon<?>> register (@RequestBody RegisterDto registerDto){
 		return new ResponseEntity<ResponseCommon<?>>(authenticationService.register(registerDto), HttpStatus.OK);
