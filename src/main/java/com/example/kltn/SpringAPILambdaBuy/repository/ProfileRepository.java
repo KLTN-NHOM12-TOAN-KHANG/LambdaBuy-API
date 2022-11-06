@@ -9,6 +9,6 @@ import com.example.kltn.SpringAPILambdaBuy.entities.ProfileEntity;
 
 @Repository
 @Transactional
-public interface CustomerRepository extends JpaRepository<ProfileEntity, String> {
+public interface ProfileRepository extends JpaRepository<ProfileEntity, String> {
 
 }

@@ -16,6 +16,7 @@ public class UserResponseDto {
 	private String updatedBy;
 	private boolean isEnabled;
 	private boolean isLocked;
+	private ProfileResponseDto profile;
 	public String getId() {
 		return id;
 	}
@@ -85,6 +86,28 @@ public class UserResponseDto {
 	public void setIsLocked(boolean isLocked) {
 		this.isLocked = isLocked;
 	}
+	
+	public ProfileResponseDto getProfile() {
+		return profile;
+	}
+	public void setProfileDto(ProfileResponseDto profile) {
+		this.profile = profile;
+	}
+	public UserResponseDto(String id, String email, String username, String password, UserRole role, Date createdDate,
+			String createdBy, Date updatedDate, String updatedBy, ProfileResponseDto profile) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+		this.updatedDate = updatedDate;
+		this.updatedBy = updatedBy;
+		this.profile = profile;
+	}
+	
 	public UserResponseDto(String id, String email, String username, String password, UserRole role, Date createdDate,
 			String createdBy, Date updatedDate, String updatedBy) {
 		super();
@@ -97,6 +120,36 @@ public class UserResponseDto {
 		this.createdBy = createdBy;
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
+	}
+	
+	public UserResponseDto(String id, String email, String username, String password, UserRole role, boolean isEnabled, boolean isLocked, Date createdDate,
+			String createdBy, Date updatedDate, String updatedBy, ProfileResponseDto profile) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.isEnabled = isEnabled;
+		this.isLocked = isLocked;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+		this.updatedDate = updatedDate;
+		this.updatedBy = updatedBy;
+		this.profile = profile;
+	}
+	
+	public UserResponseDto(String id, String email, String username, String password, UserRole role, Date createdDate,
+			String createdBy, ProfileResponseDto profile) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+		this.profile = profile;
 	}
 	public UserResponseDto() {
 		super();

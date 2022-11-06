@@ -1,7 +1,7 @@
 package com.example.kltn.SpringAPILambdaBuy.service;
 
-import com.example.kltn.SpringAPILambdaBuy.common.request.LoginDto;
-import com.example.kltn.SpringAPILambdaBuy.common.request.RegisterDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.authen.LoginDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.authen.RegisterDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserEntity;
 

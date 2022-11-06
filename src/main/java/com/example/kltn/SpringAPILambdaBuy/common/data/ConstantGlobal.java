@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.example.kltn.SpringAPILambdaBuy.common.request.RegisterDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.authen.RegisterDto;
 
 public class ConstantGlobal {
 	public static List<RegisterDto> listAdmin = Arrays.asList(
