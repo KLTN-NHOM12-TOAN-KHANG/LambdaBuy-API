@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -74,7 +75,7 @@ public class UserEntity implements UserDetails {
 	@Column
 	private String updatedBy;
 	
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private ProfileEntity profile;
 	/*
 	@OneToOne(mappedBy = "user")
@@ -230,6 +231,17 @@ public class UserEntity implements UserDetails {
 		this.createdBy = createdBy;
 	}
 	
+	public UserEntity(String username, String email, String password, UserRole role, Date createdDate, String createdBy, ProfileEntity profile) {
+		super();
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+		this.profile = profile;
+	}
+	
 
 	public UserEntity(String username, String email, String password, boolean enabled, UserRole role, Date createdDate,
 			String createdBy) {
@@ -241,6 +253,49 @@ public class UserEntity implements UserDetails {
 		this.role = role;
 		this.createdDate = createdDate;
 		this.createdBy = createdBy;
+	}
+
+	
+	public UserEntity(String id, String username, String email, Date updatedDate, String updatedBy) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		this.updatedDate = updatedDate;
+		this.updatedBy = updatedBy;
+	}
+	
+
+	public UserEntity(String id, String username, String email, boolean locked, boolean enabled,
+			Date updatedDate, String updatedBy, ProfileEntity profile) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		this.locked = locked;
+		this.enabled = enabled;
+		this.updatedDate = updatedDate;
+		this.updatedBy = updatedBy;
+		this.profile = profile;
+	}	
+
+	public UserEntity(String id, String username, String email, String password, boolean locked, boolean enabled,
+			UserRole role, Date createdDate, String createdBy, Date updatedDate, String updatedBy,
+			ProfileEntity profile, Set<PaymentEntity> listPayment) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.locked = locked;
+		this.enabled = enabled;
+		this.role = role;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+		this.updatedDate = updatedDate;
+		this.updatedBy = updatedBy;
+		this.profile = profile;
+		this.listPayment = listPayment;
 	}
 
 	public UserEntity() {

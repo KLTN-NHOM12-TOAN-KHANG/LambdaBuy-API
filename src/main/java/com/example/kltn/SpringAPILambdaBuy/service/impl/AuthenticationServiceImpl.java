@@ -16,8 +16,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.kltn.SpringAPILambdaBuy.common.data.ConstantGlobal;
 import com.example.kltn.SpringAPILambdaBuy.common.interfaces.MailSender;
-import com.example.kltn.SpringAPILambdaBuy.common.request.LoginDto;
-import com.example.kltn.SpringAPILambdaBuy.common.request.RegisterDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.authen.LoginDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.authen.RegisterDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.ProfileResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.common.response.UserResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.entities.CartEntity;
@@ -30,7 +31,7 @@ import com.example.kltn.SpringAPILambdaBuy.security.PasswordEncoder;
 import com.example.kltn.SpringAPILambdaBuy.service.AuthenticationService;
 import com.example.kltn.SpringAPILambdaBuy.service.CartService;
 import com.example.kltn.SpringAPILambdaBuy.service.ConfirmationTokenService;
-import com.example.kltn.SpringAPILambdaBuy.service.CustomerService;
+import com.example.kltn.SpringAPILambdaBuy.service.ProfileService;
 import com.example.kltn.SpringAPILambdaBuy.service.UserService;
 import com.example.kltn.SpringAPILambdaBuy.validator.EmailValidator;
 
@@ -43,7 +44,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	private ConfirmationTokenService confirmationTokenService;
 	
 	@Autowired
-	private CustomerService customerService;
+	private ProfileService profileService;
 	
 	@Autowired
 	private CartService cartService;
@@ -94,14 +95,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		if(userName != null) {
 			return new ResponseCommon<>(400, false, "USERNAME_EXIST");
 		}
+		
+		ProfileEntity profile = new ProfileEntity(registerDto.getFirstName(), registerDto.getLastName());
+		ProfileEntity createProfile = profileService.save(profile);
+		
 		String encodePassword = bCryptPasswordEncoder.encode(registerDto.getPassword());
-		UserEntity createUser = new UserEntity(registerDto.getUsername(), registerDto.getEmail(), encodePassword, UserRole.CUSTOMER, new Date(), registerDto.getFirstName() + " " + registerDto.getLastName());
+		UserEntity createUser = new UserEntity(registerDto.getUsername(), registerDto.getEmail(), encodePassword, UserRole.CUSTOMER, new Date(), registerDto.getFirstName() + " " + registerDto.getLastName(), new ProfileEntity());
+		createUser.setProfile(createProfile);
 		userService.saveUser(createUser);
+		createProfile.setUser(createUser);
+		profileService.save(createProfile);
 		
-		ProfileEntity customer = new ProfileEntity(registerDto.getFirstName(), registerDto.getLastName(), createUser);
-		customerService.save(customer);
-		
-		CartEntity cart = new CartEntity(0, true, customer, new HashSet<>());
+		CartEntity cart = new CartEntity(0, true, profile, new HashSet<>());
 		cartService.save(cart);
 		
 		createUser.setProfile(null);
@@ -120,7 +125,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 					, link));
 		
 		UserResponseDto userDto = new UserResponseDto(createUser.getId(), createUser.getEmail(), createUser.getUsername(), createUser.getPassword(), createUser.getRole(),  createUser.getCreatedDate(), createUser.getCreatedBy(), createUser.getUpdatedDate(), createUser.getUpdatedBy());
-		return new ResponseCommon<>(200, true, "REGISTER_SUCCESS", createToken.toString());
+		return new ResponseCommon<>(200, true, "REGISTER_SUCCESS", userDto);
 	}
 	
 	@Override
@@ -129,8 +134,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		if(userName != null) {
 			if(userName.isEnabled() == true) {
 				if(bCryptPasswordEncoder.matches(loginDto.getPassword(), userName.getPassword())) {
-					UserResponseDto userDto = new UserResponseDto(userName.getId(), userName.getEmail(), userName.getUsername(), userName.getPassword(), userName.getRole(), userName.getCreatedDate(), userName.getCreatedBy(), userName.getUpdatedDate(), userName.getUpdatedBy());
-					return new ResponseCommon<>(200, true, "LOGIN_SUCCESS", userDto);
+					ProfileEntity profile = userName.getProfile();
+					if(profile != null) {
+						ProfileResponseDto profileDto = new ProfileResponseDto(profile.getId(), profile.getPhoneNumber(), profile.getAddress(), profile.getAvatar(), profile.getFirstName(), profile.getLastName(), profile.getCreatedDate(), profile.getCreatedBy(), profile.getUpdatedDate(), profile.getUpdatedBy());
+						UserResponseDto userDto = new UserResponseDto(userName.getId(), userName.getEmail(), userName.getUsername(), userName.getPassword(), userName.getRole(), userName.isEnabled(), userName.isLocked(), userName.getCreatedDate(), userName.getCreatedBy(), userName.getUpdatedDate(), userName.getUpdatedBy(), profileDto);
+						return new ResponseCommon<>(200, true, "LOGIN_SUCCESS", userDto);
+					}
+					return new ResponseCommon<>(400, false, "USER_NOT_PERMISSION");
 				} else {
 					return new ResponseCommon<>(400, false, "USERNAME_OR_PASSWORD_NOT_TRUE");
 				}
