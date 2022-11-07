@@ -69,10 +69,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		List<RegisterDto> listAdmin = ConstantGlobal.listAdmin;
 		List<UserResponseDto> listUserDto = new ArrayList();
 		for (RegisterDto registerDto : listAdmin) {
+			ProfileEntity profile = new ProfileEntity(registerDto.getFirstName(), registerDto.getLastName());
+			ProfileEntity createProfile = profileService.save(profile);
+			
 			String encodePassword = bCryptPasswordEncoder.encode(registerDto.getPassword());
-			UserEntity createUser = new UserEntity(registerDto.getUsername(), registerDto.getEmail(), encodePassword, true, UserRole.ADMIN, new Date(), registerDto.getFirstName() + " " + registerDto.getLastName());
+			UserEntity createUser = new UserEntity(registerDto.getUsername(), registerDto.getEmail(), encodePassword, true, UserRole.ADMIN, new Date(), registerDto.getFirstName() + " " + registerDto.getLastName(), new ProfileEntity());
+			createUser.setProfile(createProfile);
 			userService.saveUser(createUser);
-			UserResponseDto userDto = new UserResponseDto(createUser.getId(), createUser.getEmail(), createUser.getUsername(), createUser.getPassword(), createUser.getRole(),  createUser.getCreatedDate(), createUser.getCreatedBy(), createUser.getUpdatedDate(), createUser.getUpdatedBy());
+			createProfile.setUser(createUser);
+			profileService.save(createProfile);
+			ProfileResponseDto profileDto = new ProfileResponseDto(profile.getId(), profile.getPhoneNumber(), profile.getAddress(), profile.getAvatar(), profile.getFirstName(), profile.getLastName(), profile.getCreatedDate(), profile.getCreatedBy(), profile.getUpdatedDate(), profile.getUpdatedBy());
+			UserResponseDto userDto = new UserResponseDto(createUser.getId(), createUser.getEmail(), createUser.getUsername(), createUser.getPassword(), createUser.getRole(),  createUser.getCreatedDate(), createUser.getCreatedBy(), createUser.getUpdatedDate(), createUser.getUpdatedBy(), profileDto);
 			listUserDto.add(userDto);
 		}
 		return new ResponseCommon<>(200, true, "SEED_ADMIN_SUCCESS", listUserDto);
@@ -124,7 +131,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 					registerDto.getFirstName() + " " + registerDto.getLastName()
 					, link));
 		
-		UserResponseDto userDto = new UserResponseDto(createUser.getId(), createUser.getEmail(), createUser.getUsername(), createUser.getPassword(), createUser.getRole(),  createUser.getCreatedDate(), createUser.getCreatedBy(), createUser.getUpdatedDate(), createUser.getUpdatedBy());
+		ProfileResponseDto profileDto = new ProfileResponseDto(profile.getId(), profile.getPhoneNumber(), profile.getAddress(), profile.getAvatar(), profile.getFirstName(), profile.getLastName(), profile.getCreatedDate(), profile.getCreatedBy(), profile.getUpdatedDate(), profile.getUpdatedBy());
+		UserResponseDto userDto = new UserResponseDto(createUser.getId(), createUser.getEmail(), createUser.getUsername(), createUser.getPassword(), createUser.getRole(),  createUser.getCreatedDate(), createUser.getCreatedBy(), createUser.getUpdatedDate(), createUser.getUpdatedBy(), profileDto);
 		return new ResponseCommon<>(200, true, "REGISTER_SUCCESS", userDto);
 	}
 	
@@ -138,9 +146,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 					if(profile != null) {
 						ProfileResponseDto profileDto = new ProfileResponseDto(profile.getId(), profile.getPhoneNumber(), profile.getAddress(), profile.getAvatar(), profile.getFirstName(), profile.getLastName(), profile.getCreatedDate(), profile.getCreatedBy(), profile.getUpdatedDate(), profile.getUpdatedBy());
 						UserResponseDto userDto = new UserResponseDto(userName.getId(), userName.getEmail(), userName.getUsername(), userName.getPassword(), userName.getRole(), userName.isEnabled(), userName.isLocked(), userName.getCreatedDate(), userName.getCreatedBy(), userName.getUpdatedDate(), userName.getUpdatedBy(), profileDto);
-						return new ResponseCommon<>(200, true, "LOGIN_SUCCESS", userDto);
+						return new ResponseCommon<>(200, true, "LOGIN_USER_SUCCESS", userDto);
 					}
-					return new ResponseCommon<>(400, false, "USER_NOT_PERMISSION");
+					
+					return new ResponseCommon<>(200, true, "LOGIN_ADMIN_SUCCESS");
 				} else {
 					return new ResponseCommon<>(400, false, "USERNAME_OR_PASSWORD_NOT_TRUE");
 				}

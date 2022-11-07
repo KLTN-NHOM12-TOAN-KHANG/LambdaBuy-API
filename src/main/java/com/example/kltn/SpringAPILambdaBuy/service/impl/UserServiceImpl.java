@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
 			if(userEntity.getRole() == UserRole.CUSTOMER) {
 				ProfileEntity profile = userEntity.getProfile();
 				ProfileResponseDto profileDto = new ProfileResponseDto(profile.getId(), profile.getPhoneNumber(), profile.getAddress(), profile.getAvatar(), profile.getFirstName(), profile.getLastName());
-				UserResponseDto userDto = new UserResponseDto(userEntity.getId(), userEntity.getEmail(), userEntity.getUsername(), userEntity.getPassword(), userEntity.getRole(), userEntity.getCreatedDate(), userEntity.getCreatedBy(), userEntity.getUpdatedDate(), userEntity.getUpdatedBy(), profileDto);
+				UserResponseDto userDto = new UserResponseDto(userEntity.getId(), userEntity.getEmail(), userEntity.getUsername(), userEntity.getPassword(), userEntity.getRole(), userEntity.isEnabled(), userEntity.isLocked(), userEntity.getCreatedDate(), userEntity.getCreatedBy(), userEntity.getUpdatedDate(), userEntity.getUpdatedBy(), profileDto);
 				listUserDto.add(userDto);
 			}
 		}
