@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.kltn.SpringAPILambdaBuy.common.request.authen.RegisterDto;
 import com.example.kltn.SpringAPILambdaBuy.common.request.user.CreateUserDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.user.CreateUserProfileDto;
 import com.example.kltn.SpringAPILambdaBuy.common.request.user.UpdateUserDto;
 import com.example.kltn.SpringAPILambdaBuy.common.request.user.UpdateUserProfileDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ProfileResponseDto;
@@ -89,6 +90,15 @@ public class UserController {
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "CREATE_USER_SUCCESS", responseUser));
 		}
 		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "CREATE_USER_FAIL"));
+	}
+	
+	@PostMapping("/user/create-user-profile")
+	public ResponseEntity<UserResponseDto> createUserProfile(CreateUserProfileDto createUserProfileDto) {
+		UserResponseDto responseUser = userService.createUserProfile(createUserProfileDto);
+		if(responseUser != null) {
+			return ResponseEntity.ok().body(responseUser);
+		}
+		return ResponseEntity.badRequest().body(null);
 	}
 	
 	@PostMapping("/user/update")

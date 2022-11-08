@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -51,7 +52,7 @@ public class ProfileEntity {
 	@Column
 	private String updatedBy;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private UserEntity user;
 	
@@ -112,6 +113,31 @@ public class ProfileEntity {
 		this.createdBy = createdBy;
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
+	}
+	
+	public ProfileEntity(String phoneNumber, String address, String avatar, String firstName,
+			String lastName, Date createdDate, String createdBy) {
+		super();
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.avatar = avatar;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+	}
+	
+	public ProfileEntity(String phoneNumber, String address, String avatar, String firstName,
+			String lastName, Date createdDate, String createdBy, UserEntity user) {
+		super();
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.avatar = avatar;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.createdDate = createdDate;
+		this.createdBy = createdBy;
+		this.user = user;
 	}
 
 	public String getId() {

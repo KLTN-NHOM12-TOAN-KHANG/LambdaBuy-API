@@ -35,7 +35,7 @@ public class ProfileController {
 		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "PROFILE_NOT_FOUND"));
 	}
 
-	@PutMapping("/")
+	@PostMapping("/update")
 	public ResponseEntity<ResponseCommon<?>> updateProfile(@RequestBody UpdateProfileDto updateProfileDto) {
 		ProfileEntity profileEntity = profileService.update(updateProfileDto);
 		if(profileEntity != null) {

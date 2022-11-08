@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.kltn.SpringAPILambdaBuy.common.request.profile.UpdateProfileDto;
 import com.example.kltn.SpringAPILambdaBuy.common.request.user.CreateUserDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.user.CreateUserProfileDto;
 import com.example.kltn.SpringAPILambdaBuy.common.request.user.UpdateUserDto;
 import com.example.kltn.SpringAPILambdaBuy.common.request.user.UpdateUserProfileDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ProfileResponseDto;
@@ -72,6 +73,22 @@ public class UserServiceImpl implements UserService {
 			return userDto;
 		}
 		return null;
+	}
+	
+	@Override
+	public UserResponseDto createUserProfile(CreateUserProfileDto createUserProfileDto) {
+		ProfileEntity profile = new ProfileEntity(createUserProfileDto.getPhoneNumber(), createUserProfileDto.getAddress(), createUserProfileDto.getAvatar(), createUserProfileDto.getFirstName(), createUserProfileDto.getLastName(), new Date(), "admin", new UserEntity());
+		ProfileEntity createProfile = profileService.save(profile);
+		
+		String encodePassword = bCryptPasswordEncoder.encode(createUserProfileDto.getPassword());
+		UserEntity createUser = new UserEntity(createUserProfileDto.getUsername(), createUserProfileDto.getEmail(), encodePassword, true, UserRole.CUSTOMER, new Date(), "admin", new ProfileEntity());
+		createUser.setProfile(createProfile);
+		saveUser(createUser);
+		createProfile.setUser(createUser);
+		profileService.save(createProfile);
+		ProfileResponseDto profileDto = new ProfileResponseDto(profile.getId(), profile.getPhoneNumber(), profile.getAddress(), profile.getAvatar(), profile.getFirstName(), profile.getLastName(), profile.getCreatedDate(), profile.getCreatedBy(), profile.getUpdatedDate(), profile.getUpdatedBy());
+		UserResponseDto userDto = new UserResponseDto(createUser.getId(), createUser.getEmail(), createUser.getUsername(), createUser.getPassword(), createUser.getRole(),  createUser.getCreatedDate(), createUser.getCreatedBy(), createUser.getUpdatedDate(), createUser.getUpdatedBy(), profileDto);
+		return userDto;
 	}
 
 	@Override
