@@ -17,47 +17,60 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.example.kltn.SpringAPILambdaBuy.common.request.brand.CreateBrandDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.brand.UpdateBrandDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.BrandResponseDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.entities.BrandEntity;
 import com.example.kltn.SpringAPILambdaBuy.service.BrandService;
 
-
-
 @RestController
-@RequestMapping("/api/brands")
+@RequestMapping("/api")
 public class BrandController {
 	private static final String APPLICATION_JSON_VALUE = "application/json";
 	@Autowired
-	private BrandService service;
+	private BrandService brandService;
 	
-	@GetMapping("/")
-	public List<BrandEntity> findAll(){
-		return service.findAll();
+	@GetMapping("/brands")
+	public ResponseEntity<ResponseCommon<List<BrandResponseDto>>> findAllBrand(){
+		return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "FIND_ALL_BRAND_SUCCESS", brandService.findAll()));
 	}
 	
-	@GetMapping("/{id}")
-	public BrandEntity findById(@PathVariable("id") String id) {
-		return service.findById(id);
-	}
-	
-	@PostMapping("/")
-	public void create(@RequestBody BrandEntity brand) {
-		service.create(brand);
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@RequestBody BrandEntity brand, @PathVariable("id") String id){
-		try {
-			BrandEntity existbrand = service.findById(id);
-			brand.setId(id);
-			service.create(brand);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (NoSuchElementException e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	@GetMapping("/brand/{id}")
+	public ResponseEntity<ResponseCommon<BrandResponseDto>> findById(@PathVariable("id") String id) {
+		BrandResponseDto brandDto = brandService.findById(id);
+		if(brandDto != null) {
+			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "FIND_BRAND_SUCCESS", brandDto));
 		}
+		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "BRAND_NOT_FOUND", null));
 	}
 	
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable String id) {
-		service.delete(id);
+	@PostMapping("/brand/create")
+	public ResponseEntity<ResponseCommon<?>> saveBrand(@RequestBody BrandEntity brand) {
+		brandService.save(brand);
+		return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "SAVE_BRAND_SUCCESS"));
+	}
+	
+	@PostMapping("/brand/create")
+	public ResponseEntity<ResponseCommon<BrandResponseDto>> createBrand(@RequestBody CreateBrandDto createBrandDto) {
+		BrandResponseDto brandDto = brandService.create(createBrandDto);
+		if(brandDto != null) {
+			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "CREATE_BRAND_SUCCESS", brandDto));
+		}
+		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "CREATE_BRAND_FAIL", null));
+	}
+	
+	@PostMapping("/brand/update")
+	public ResponseEntity<ResponseCommon<BrandResponseDto>> updateBrand(@RequestBody UpdateBrandDto updateBrandDto) {
+		BrandResponseDto brandDto = brandService.update(updateBrandDto);
+		if(brandDto != null) {
+			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "UPDATE_BRAND_SUCCESS", brandDto));
+		}
+		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "UPDATE_BRAND_FAIL", null));
+	}
+	
+	@GetMapping("/brand/delete/{id}")
+	public ResponseEntity<ResponseCommon<BrandResponseDto>> deleteBrand(@PathVariable String id) {
+		return ResponseEntity.ok().body(new ResponseCommon<BrandResponseDto>(200, true, "DELETE_BRAND_SUCCESS", brandService.deleteById(id)));
 	}
 }

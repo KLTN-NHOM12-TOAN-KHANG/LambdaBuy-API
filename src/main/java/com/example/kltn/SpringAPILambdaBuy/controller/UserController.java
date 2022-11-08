@@ -109,15 +109,6 @@ public class UserController {
 		}
 		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "UPDATE_USER_FAIL"));
 	}
-	
-//	@PostMapping("/user/update-user-profile")
-//	public ResponseEntity<ResponseCommon<?>> updateUserAndProfile(@RequestBody UpdateUserProfileDto updateUserDto) {
-//		UserResponseDto responseUser = userService.updateUserAndProfile(updateUserDto);
-//		if(responseUser != null) {
-//			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "UPDATE_USER_AND_PROFILE_SUCCESS", responseUser));
-//		}
-//		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "UPDATE_USER_AND_PROFILE_FAIL"));
-//	}
 
 	@GetMapping("/user/delete/{id}")
 	public ResponseEntity<ResponseCommon<?>> deleteUser(@PathVariable("id") String id){
