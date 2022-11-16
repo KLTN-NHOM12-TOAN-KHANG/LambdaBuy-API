@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -77,18 +78,22 @@ public class UserEntity implements UserDetails {
 	
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private ProfileEntity profile;
-	/*
-	@OneToOne(mappedBy = "user")
-	private AdminEntity admin;
-	*/
+	
+	@OneToMany(mappedBy = "user")
+	private Set<OrderEntity> listOrder;
+	
 	@OneToMany(mappedBy = "user")
 	private Set<PaymentEntity> listPayment;
 
 	@JsonDeserialize(using = CustomAuthorityDeserializer.class)
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
-		return Collections.singletonList(authority);
+//		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
+//		return Collections.singletonList(authority);
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.name()));
+		authorities.add(new SimpleGrantedAuthority(UserRole.CUSTOMER.name()));
+		return authorities;
 	}
 
 	@Override
@@ -98,7 +103,7 @@ public class UserEntity implements UserDetails {
 	
 	@Override
 	public String getUsername() {
-		return username;
+		return email;
 	}
 	@Override
 	public boolean isAccountNonExpired() {
@@ -269,6 +274,12 @@ public class UserEntity implements UserDetails {
 	}
 
 	
+	public UserEntity(String username, String email) {
+		super();
+		this.username = username;
+		this.email = email;
+	}
+
 	public UserEntity(String id, String username, String email, Date updatedDate, String updatedBy) {
 		super();
 		this.id = id;
@@ -311,10 +322,17 @@ public class UserEntity implements UserDetails {
 		this.listPayment = listPayment;
 	}
 
+
 	public UserEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
+	public Set<OrderEntity> getListOrder() {
+		return listOrder;
+	}
+
+	public void setListOrder(Set<OrderEntity> listOrder) {
+		this.listOrder = listOrder;
+	}	
 }

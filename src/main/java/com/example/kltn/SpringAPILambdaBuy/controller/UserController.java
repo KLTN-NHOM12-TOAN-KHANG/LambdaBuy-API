@@ -1,11 +1,17 @@
 package com.example.kltn.SpringAPILambdaBuy.controller;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +41,29 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+//	@GetMapping("/getCurrentUser")
+//	public UserEntity getCurrentUser() {
+////		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		String username = userService.currentUsername();
+//		UserEntity user = new UserEntity();
+//		if(null != username) {
+//			user = userService.findByUsername(username);
+//			return user;
+//		}
+//		return null;
+//	}
+	@GetMapping("/getCurrentUser")
+	public ResponseEntity<ResponseCommon<?>> getCurrentUser() {
+		String username = userService.currentUsername();
+		UserEntity user = new UserEntity();
+		if(null != username) {
+			user = userService.findByEmail(username);
+			UserResponseDto userDto = new UserResponseDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(), user.getRole(), user.getCreatedDate(), user.getCreatedBy(), user.getUpdatedDate(), user.getUpdatedBy());
+			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "GET_CURRENT_USER_SUCCESS", userDto));
+		}
+		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "GET_CURRENT_USER_FAIL", null));
+	}
+	
 	@GetMapping("/users")
 	public ResponseEntity<ResponseCommon<List<UserResponseDto>>> getUsers() {
 		return ResponseEntity.ok().body(userService.getUsers());

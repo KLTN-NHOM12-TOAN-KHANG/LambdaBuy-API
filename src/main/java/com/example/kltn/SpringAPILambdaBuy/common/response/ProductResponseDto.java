@@ -1,13 +1,6 @@
 package com.example.kltn.SpringAPILambdaBuy.common.response;
 
 import java.util.Date;
-import java.util.UUID;
-
-import javax.persistence.Column;
-import javax.persistence.Id;
-
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 
 public class ProductResponseDto {
 	private String id;
@@ -18,14 +11,18 @@ public class ProductResponseDto {
 	private String image;
 	private String status;
 	private int inStock;
-	private Date ManufacturedDate;
 	private String country;
+	private int manufacturedDate;
 	private boolean special;
 	private Date createdDate;
 	private String createdBy;
 	private Date updatedDate;
 	private String updatedBy;
 	private boolean isDeleted;
+	private String category;
+	private String brand;
+	private String supplier;
+
 	public String getId() {
 		return id;
 	}
@@ -111,11 +108,11 @@ public class ProductResponseDto {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	public boolean isDeleted() {
+	public boolean getIsDeleted() {
 		return isDeleted;
 	}
 	
-	public void setDeleted(boolean isDeleted) {
+	public void setIsDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
 	
@@ -123,18 +120,18 @@ public class ProductResponseDto {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ProductResponseDto(String name, String description, double unitPrice, double discount, String image,
-			String status, int inStock, Date ManufacturedDate, String country, boolean special, Date createdDate,
-			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted) {
+	public ProductResponseDto(String id, String name, String description, double unitPrice, double discount, String image,
+			int inStock, int ManufacturedDate, String country, boolean special, Date createdDate,
+			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, String category, String brand, String supplier) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.unitPrice = unitPrice;
 		this.discount = discount;
 		this.image = image;
-		this.status = status;
 		this.inStock = inStock;
-		this.ManufacturedDate = ManufacturedDate;
+		this.manufacturedDate = ManufacturedDate;
 		this.country = country;
 		this.special = special;
 		this.createdDate = createdDate;
@@ -142,7 +139,33 @@ public class ProductResponseDto {
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
 		this.isDeleted = isDeleted;
+		this.category = category;
+		this.brand = brand;
+		this.supplier = supplier;
 	}
-	
+	public int getManufacturedDate() {
+		return manufacturedDate;
+	}
+	public void setManufacturedDate(int manufacturedDate) {
+		this.manufacturedDate = manufacturedDate;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getBrand() {
+		return brand;
+	}
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+	public String getSupplier() {
+		return supplier;
+	}
+	public void setSupplier(String supplier) {
+		this.supplier = supplier;
+	}
 	
 }

@@ -28,7 +28,7 @@ public class ProductEntity {
 	@Column()
 	private String name;
 	
-	@Column()
+	@Column(columnDefinition="text")
 	private String description;
 	
 	@Column
@@ -40,17 +40,14 @@ public class ProductEntity {
 	@Column()
 	private String image;
 	
-	@Column()
-	private String status;
-	
 	@Column
-	private int quantity;
+	private int inStock;
 	
 	@Column()
 	private String country;
 	
 	@Column
-	private Date manufacturedDate;
+	private int manufacturedDate;
 
 	@Column()
 	private boolean special;
@@ -70,17 +67,10 @@ public class ProductEntity {
 	private String updatedBy;
 	
 	@Column
-	private boolean isEnabled;
-	
-	@Column
 	private boolean isDeleted;
 
 	@OneToMany(mappedBy = "product")
 	Set<OrderDetail> listOrderDetail;
-	
-	@ManyToOne
-	@JoinColumn(name = "cart_id")
-	private CartEntity cart;
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id")
@@ -100,8 +90,8 @@ public class ProductEntity {
 	}
 
 	public ProductEntity(String id, String name, String description, double unitPrice, double discount, String image,
-			String status, int quantity, Date manufacturedDate, String country, boolean special, Date createdDate,
-			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, boolean isEnabled, Set<OrderDetail> listOrderDetail,
+			int inStock, int manufacturedDate, String country, boolean special, Date createdDate,
+			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, Set<OrderDetail> listOrderDetail,
 			CategoryEntity category, BrandEntity brand) {
 		super();
 		this.id = id;
@@ -110,8 +100,7 @@ public class ProductEntity {
 		this.unitPrice = unitPrice;
 		this.discount = discount;
 		this.image = image;
-		this.status = status;
-		this.quantity = quantity;
+		this.inStock = inStock;
 		this.manufacturedDate = manufacturedDate;
 		this.country = country;
 		this.special = special;
@@ -120,22 +109,20 @@ public class ProductEntity {
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
 		this.isDeleted = isDeleted;
-		this.isEnabled = isEnabled;
 		this.listOrderDetail = listOrderDetail;
 	}
 
 	public ProductEntity(String name, String description, double unitPrice, double discount, String image,
-			String status, int quantity, Date manufacturedDate, String country, boolean special, Date createdDate,
-			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, boolean isEnabled, Set<OrderDetail> listOrderDetail,
-			CategoryEntity category, BrandEntity brand) {
+			int inStock, int manufacturedDate, String country, boolean special, Date createdDate,
+			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, Set<OrderDetail> listOrderDetail,
+			CategoryEntity category, BrandEntity brand, SupplierEntity supplier) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.unitPrice = unitPrice;
 		this.discount = discount;
 		this.image = image;
-		this.status = status;
-		this.quantity = quantity;
+		this.inStock = inStock;
 		this.manufacturedDate = manufacturedDate;
 		this.country = country;
 		this.special = special;
@@ -144,27 +131,25 @@ public class ProductEntity {
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
 		this.isDeleted = isDeleted;
-		this.isEnabled = isEnabled;
 		this.listOrderDetail = listOrderDetail;
 		this.category = category;
 		this.brand = brand;
+		this.supplier = supplier;
 	}
 
-	public ProductEntity(String name,String country,double unitPrice, String image, Date manufacturedDate , boolean isEnabled,CategoryEntity category, BrandEntity brand,SupplierEntity supplier,int quantity, double discount,
-			String status, String description) {
+	public ProductEntity(String name,String country,double unitPrice, String image, int manufacturedDate , CategoryEntity category, BrandEntity brand,SupplierEntity supplier,int inStock, double discount,
+			String description) {
 		super();
 		this.name = name;
 		this.unitPrice = unitPrice;
 		this.image = image;
 		this.manufacturedDate = manufacturedDate;
-		this.isEnabled = isEnabled;
 		this.category = category;
 		this.brand = brand;
 		this.supplier=supplier;
 		this.description = description;
-		this.quantity=quantity;
+		this.inStock = inStock;
 		this.discount = discount;
-		this.status = status;
 		this.country = country;
 	
 	}
@@ -216,21 +201,13 @@ public class ProductEntity {
 	public void setImage(String image) {
 		this.image = image;
 	}
-
-	public String getStatus() {
-		return status;
+	
+	public int getInStock() {
+		return inStock;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setInStock(int inStock) {
+		this.inStock = inStock;
 	}
 	
 	public String getCountry() {
@@ -241,7 +218,7 @@ public class ProductEntity {
 		this.country = country;
 	}
 
-	public boolean isSpecial() {
+	public boolean getSpecial() {
 		return special;
 	}
 
@@ -313,14 +290,6 @@ public class ProductEntity {
 		this.listOrderDetail = listOrderDetail;
 	}
 
-	public CartEntity getCart() {
-		return cart;
-	}
-
-	public void setCart(CartEntity cart) {
-		this.cart = cart;
-	}
-
 	public SupplierEntity getSupplier() {
 		return supplier;
 	}
@@ -328,29 +297,19 @@ public class ProductEntity {
 	public void setSupplier(SupplierEntity supplier) {
 		this.supplier = supplier;
 	}
-
 	
-	public boolean isEnabled() {
-		return isEnabled;
-	}
-
-	public void setEnabled(boolean isEnabled) {
-		this.isEnabled = isEnabled;
-	}
-
-	
-	public boolean isDeleted() {
+	public boolean getIsDeleted() {
 		return isDeleted;
 	}
 
-	public void setDeleted(boolean isDeleted) {
+	public void setIsDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
 	
-	public Date getManufacturedDate() {
+	public int getManufacturedDate() {
 		return manufacturedDate;
 	}
-	public void setManufacturedDate(Date manufacturedDate) {
+	public void setManufacturedDate(int manufacturedDate) {
 		this.manufacturedDate = manufacturedDate;
 	}
 }

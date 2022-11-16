@@ -1,18 +1,5 @@
 package com.example.kltn.SpringAPILambdaBuy.common.request.profile;
 
-import java.util.Set;
-import java.util.UUID;
-
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-import com.example.kltn.SpringAPILambdaBuy.entities.CartEntity;
-import com.example.kltn.SpringAPILambdaBuy.entities.OrderEntity;
-import com.example.kltn.SpringAPILambdaBuy.entities.UserEntity;
-
 public class UpdateProfileDto {
 	private String id;
 	private String phoneNumber;

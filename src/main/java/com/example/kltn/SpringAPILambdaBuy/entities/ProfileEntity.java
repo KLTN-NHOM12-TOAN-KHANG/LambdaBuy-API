@@ -56,19 +56,13 @@ public class ProfileEntity {
 	@JoinColumn(name = "user_id")
 	private UserEntity user;
 	
-	@OneToOne(mappedBy = "profile")
-	private CartEntity cart;
-	
-	@OneToMany(mappedBy = "profile")
-	private Set<OrderEntity> listOrder;
-
 	public ProfileEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public ProfileEntity(String id, String phoneNumber, String address, String avatar, String firstName,
-			String lastName, UserEntity user, CartEntity cart) {
+			String lastName, UserEntity user) {
 		super();
 		this.id = id;
 		this.phoneNumber = phoneNumber;
@@ -77,11 +71,10 @@ public class ProfileEntity {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.user = user;
-		this.cart = cart;
 	}
 
 	public ProfileEntity(String phoneNumber, String address, String avatar, String firstName, String lastName,
-			UserEntity user, CartEntity cart) {
+			UserEntity user) {
 		super();
 		this.phoneNumber = phoneNumber;
 		this.address = address;
@@ -89,7 +82,6 @@ public class ProfileEntity {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.user = user;
-		this.cart = cart;
 	}
 	
 
@@ -195,15 +187,7 @@ public class ProfileEntity {
 	public void setUser(UserEntity user) {
 		this.user = user;
 	}
-
-	public CartEntity getCart() {
-		return cart;
-	}
-
-	public void setCart(CartEntity cart) {
-		this.cart = cart;
-	}
-
+	
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -236,11 +220,11 @@ public class ProfileEntity {
 		this.updatedBy = updatedBy;
 	}
 
-	public Set<OrderEntity> getListOrder() {
-		return listOrder;
-	}
-
-	public void setListOrder(Set<OrderEntity> listOrder) {
-		this.listOrder = listOrder;
-	}
+//	public Set<OrderEntity> getListOrder() {
+//		return listOrder;
+//	}
+//
+//	public void setListOrder(Set<OrderEntity> listOrder) {
+//		this.listOrder = listOrder;
+//	}
 }
