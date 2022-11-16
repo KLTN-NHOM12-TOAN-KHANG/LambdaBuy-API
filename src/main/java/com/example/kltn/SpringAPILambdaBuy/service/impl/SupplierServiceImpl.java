@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.kltn.SpringAPILambdaBuy.common.request.supplier.CreateSupplierDto;
 import com.example.kltn.SpringAPILambdaBuy.common.request.supplier.UpdateSupplierDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.BrandResponseDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.CategoryResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.common.response.SupplierResponseDto;
+import com.example.kltn.SpringAPILambdaBuy.entities.BrandEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.SupplierEntity;
 import com.example.kltn.SpringAPILambdaBuy.repository.SupplierRepository;
 import com.example.kltn.SpringAPILambdaBuy.service.SupplierService;
@@ -23,52 +26,60 @@ public class SupplierServiceImpl implements SupplierService {
 	private SupplierRepository supplierRepository;
 	
 	@Override
-	public ResponseCommon<?> findAll() {
-		List<SupplierEntity> suppliers = supplierRepository.findAll();
-		List<SupplierResponseDto> listSupplierDto = new ArrayList<>();
-		for (SupplierEntity supplierEntity : suppliers) {
-			SupplierResponseDto supplierDto = new SupplierResponseDto(supplierEntity.getId(), supplierEntity.getName(), supplierEntity.getAddress(), supplierEntity.getDescription(), supplierEntity.getIsDeleted(), supplierEntity.getCreatedDate(), supplierEntity.getCreatedBy(), supplierEntity.getUpdatedDate(), supplierEntity.getUpdatedBy()); 
-			listSupplierDto.add(supplierDto);
-		}
-		return new ResponseCommon<>(200, true, "SUCCESS", listSupplierDto);
+	public List<SupplierEntity> findAll() {
+		return supplierRepository.findAll();
 	}
 
 	@Override
-	public ResponseCommon<?> findById(String id) {
-		SupplierEntity supplierEntity = supplierRepository.findById(id).get();
-		if(supplierEntity != null) {
-			SupplierResponseDto supplierDto = new SupplierResponseDto(supplierEntity.getId(), supplierEntity.getName(), supplierEntity.getAddress(), supplierEntity.getDescription(), supplierEntity.getIsDeleted(), supplierEntity.getCreatedDate(), supplierEntity.getCreatedBy(), supplierEntity.getUpdatedDate(), supplierEntity.getUpdatedBy()); 
-			return new ResponseCommon<>(200, true, "FIND_SUPPLIER_SUCCESS", supplierDto);
-		}
-		return new ResponseCommon<>(500, false, "SERVER_ERROR_INTERNAL");
+	public SupplierEntity findById(String id) {
+		return supplierRepository.findById(id).isPresent()
+				? supplierRepository.findById(id).get()
+				: null;
 	}
 
 	@Override
-	public ResponseCommon<?> findByName(String name) {
-		SupplierEntity supplierEntity = supplierRepository.findByName(name);
-		if(supplierEntity != null) {
-			SupplierResponseDto supplierDto = new SupplierResponseDto(supplierEntity.getId(), supplierEntity.getName(), supplierEntity.getAddress(), supplierEntity.getDescription(), supplierEntity.getIsDeleted(), supplierEntity.getCreatedDate(), supplierEntity.getCreatedBy(), supplierEntity.getUpdatedDate(), supplierEntity.getUpdatedBy()); 
-			return new ResponseCommon<>(200, true, "FIND_SUPPLIER_SUCCESS", supplierDto);
-		}
-		return new ResponseCommon<>(500, false, "SERVER_ERROR_INTERNAL");
-	}
-
-	@Override
-	public ResponseCommon<?> create(CreateSupplierDto supplierDto) {
-		List<SupplierEntity> listSupplier = supplierRepository.findAll();
-		for (SupplierEntity supplierEntity : listSupplier) {
-			if(supplierEntity.getName().equalsIgnoreCase(supplierDto.getName())) {
-				return new ResponseCommon<>(400, false, "SUPPLIER_ALREADY_EXIST");
+	public SupplierEntity findByName(String name) {
+		List<SupplierEntity> list = supplierRepository.findAll();
+		for (SupplierEntity supplier : list) {
+			if(supplier.getName().equalsIgnoreCase(name)) {
+				return supplier;
 			}
 		}
-		SupplierEntity supplier = new SupplierEntity(supplierDto.getName(), supplierDto.getAddress(), supplierDto.getDescription(), new HashSet<>(), false, new Date(), null);
-		supplierRepository.save(supplier);
-		return new ResponseCommon<>(200, true, "CREATE_SUPPLIER_SUCCESS", supplier);
+		return null;
+	}
+
+	@Override
+	public SupplierResponseDto create(CreateSupplierDto createSupplierDto) {
+		SupplierEntity supplier = new SupplierEntity(createSupplierDto.getName(), createSupplierDto.getAddress(), createSupplierDto.getDescription(), new HashSet<>(), false, new Date(), null);
+		List<SupplierEntity> list = supplierRepository.findAll();
+		if(list.size() == 0) {
+			SupplierEntity createSupplier = supplierRepository.save(supplier);
+			if(createSupplier != null) {
+				SupplierResponseDto supplierDto = new SupplierResponseDto(createSupplier.getId(), createSupplier.getName(), createSupplier.getAddress(), createSupplier.getDescription(), false, new Date(), "admin", null, null);
+				return supplierDto;
+			} else {
+				return null;
+			}
+		}
+		for (SupplierEntity supplierEntity : list) {
+			if(!supplierEntity.getName().equalsIgnoreCase(createSupplierDto.getName())) {
+				SupplierEntity createSupplier = supplierRepository.save(supplier);
+				if(createSupplier != null) {
+					SupplierResponseDto supplierDto = new SupplierResponseDto(createSupplier.getId(), createSupplier.getName(), createSupplier.getAddress(), createSupplier.getDescription(), false, new Date(), "admin", null, null);
+					return supplierDto;
+				} else {
+					return null;
+				}
+			}
+		}
+		return null;
 	}
 	
 	@Override
-	public ResponseCommon<?> update(UpdateSupplierDto updateSupplierDto) {
-		SupplierEntity supplier = supplierRepository.findById(updateSupplierDto.getId()).get();
+	public SupplierResponseDto update(UpdateSupplierDto updateSupplierDto) {
+		SupplierEntity supplier = supplierRepository.findById(updateSupplierDto.getId()).isPresent()
+									? supplierRepository.findById(updateSupplierDto.getId()).get()
+									: null;
 		if(supplier != null) {
 			supplier.setName(updateSupplierDto.getName());
 			supplier.setAddress(updateSupplierDto.getAddress());
@@ -77,19 +88,23 @@ public class SupplierServiceImpl implements SupplierService {
 			supplier.setIsDeleted(updateSupplierDto.isDeleted());
 			supplier.setUpdatedDate(new Date());
 			SupplierEntity updateSupplier = supplierRepository.save(supplier);
-			return new ResponseCommon<>(200, true, "UPDATE_SUPPLIER_SUCCESS", updateSupplier);
+			SupplierResponseDto supplierDto = new SupplierResponseDto(updateSupplier.getId(), updateSupplier.getName(), updateSupplier.getAddress(), updateSupplier.getDescription(), updateSupplier.getIsDeleted(), updateSupplier.getCreatedDate(), updateSupplier.getCreatedBy(), new Date(), "admin");
+			return supplierDto;
 		}
-		return new ResponseCommon<>(400, false, "SUPPLIER_NOT_FOUND");
+		return null;
 	}
 
 	@Override
-	public ResponseCommon<?> deleteById(String id) {
-		SupplierEntity supplier = supplierRepository.findById(id).get();
-		if(supplier == null) {
-			return new ResponseCommon<>(400, false, "SUPPLIER_NOT_FOUND");
+	public SupplierResponseDto deleteById(String id) {
+		SupplierEntity supplier = supplierRepository.findById(id).isPresent()
+								? supplierRepository.findById(id).get()
+								: null;
+		if(supplier != null) {
+			supplier.setIsDeleted(true);
+			SupplierEntity deleteSupplier = supplierRepository.save(supplier);
+			SupplierResponseDto supplierDto = new SupplierResponseDto(deleteSupplier.getId(), deleteSupplier.getName(), deleteSupplier.getAddress(), deleteSupplier.getDescription(), deleteSupplier.getIsDeleted(), deleteSupplier.getCreatedDate(), deleteSupplier.getCreatedBy(), new Date(), "admin");
+			return supplierDto;
 		}
-		supplier.setIsDeleted(true);
-		supplierRepository.save(supplier);
-		return new ResponseCommon<>(200, true, "DELETE_SUPPLIER_SUCCESS");
+		return null;
 	}
 }

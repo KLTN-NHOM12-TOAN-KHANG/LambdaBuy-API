@@ -1,5 +1,10 @@
 package com.example.kltn.SpringAPILambdaBuy.common.request.authen;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 public class LoginDto {
 	private String email;
 	private String username;

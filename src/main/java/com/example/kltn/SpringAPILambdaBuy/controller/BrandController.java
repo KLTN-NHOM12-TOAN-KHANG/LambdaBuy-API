@@ -1,5 +1,6 @@
 package com.example.kltn.SpringAPILambdaBuy.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -33,19 +34,36 @@ public class BrandController {
 	
 	@GetMapping("/brands")
 	public ResponseEntity<ResponseCommon<List<BrandResponseDto>>> findAllBrand(){
-		return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "FIND_ALL_BRAND_SUCCESS", brandService.findAll()));
+		List<BrandEntity> list = brandService.findAll();
+		List<BrandResponseDto> listDto = new ArrayList<>();
+		for (BrandEntity brand : list) {
+			BrandResponseDto brandDto = new BrandResponseDto(brand.getId(), brand.getName(), brand.getFullName(), brand.getAddress(), brand.getIsDeleted(), brand.getCreatedDate(), brand.getCreatedBy(), brand.getUpdatedDate(), brand.getUpdatedBy());
+			listDto.add(brandDto);
+		}
+		return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "FIND_ALL_BRAND_SUCCESS", listDto));
 	}
 	
 	@GetMapping("/brand/{id}")
 	public ResponseEntity<ResponseCommon<BrandResponseDto>> findById(@PathVariable("id") String id) {
-		BrandResponseDto brandDto = brandService.findById(id);
-		if(brandDto != null) {
+		BrandEntity brand = brandService.findById(id);
+		if(brand != null) {
+			BrandResponseDto brandDto = new BrandResponseDto(brand.getId(), brand.getName(), brand.getFullName(), brand.getAddress(), brand.getIsDeleted(), brand.getCreatedDate(), brand.getCreatedBy(), brand.getUpdatedDate(), brand.getUpdatedBy());
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "FIND_BRAND_SUCCESS", brandDto));
 		}
 		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "BRAND_NOT_FOUND", null));
 	}
 	
-	@PostMapping("/brand/create")
+	@GetMapping("/brand/name/{name}")
+	public ResponseEntity<ResponseCommon<BrandResponseDto>> findByName(@PathVariable("name") String name) {
+		BrandEntity brand = brandService.findByName(name);
+		if(brand != null) {
+			BrandResponseDto brandDto = new BrandResponseDto(brand.getId(), brand.getName(), brand.getFullName(), brand.getAddress(), brand.getIsDeleted(), brand.getCreatedDate(), brand.getCreatedBy(), brand.getUpdatedDate(), brand.getUpdatedBy());
+			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "FIND_BRAND_SUCCESS", brandDto));
+		}
+		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "BRAND_NOT_FOUND", null));
+	}
+	
+	@PostMapping("/brand/save")
 	public ResponseEntity<ResponseCommon<?>> saveBrand(@RequestBody BrandEntity brand) {
 		brandService.save(brand);
 		return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "SAVE_BRAND_SUCCESS"));

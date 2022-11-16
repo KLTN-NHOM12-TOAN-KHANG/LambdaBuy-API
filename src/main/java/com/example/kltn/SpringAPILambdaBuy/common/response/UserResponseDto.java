@@ -155,6 +155,10 @@ public class UserResponseDto {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	public UserResponseDto(String username) {
+		super();
+		this.username = username;
+	}
 	
 	
 }

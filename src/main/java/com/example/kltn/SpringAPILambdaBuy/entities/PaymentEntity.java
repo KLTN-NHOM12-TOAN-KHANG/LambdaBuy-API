@@ -30,32 +30,29 @@ public class PaymentEntity {
 	@JoinColumn(name = "user_id")
 	private UserEntity user;
 	
-	@OneToOne(mappedBy = "payment")
-	private OrderEntity order;
+//	@OneToOne(mappedBy = "payment")
+//	private OrderEntity order;
 
 	public PaymentEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public PaymentEntity(String id, Date paidDate, String detail, double total, UserEntity user,
-			OrderEntity order) {
+	public PaymentEntity(String id, Date paidDate, String detail, double total, UserEntity user) {
 		super();
 		this.id = id;
 		this.paidDate = paidDate;
 		this.detail = detail;
 		this.total = total;
 		this.user = user;
-		this.order = order;
 	}
 
-	public PaymentEntity(Date paidDate, String detail, double total, UserEntity user, OrderEntity order) {
+	public PaymentEntity(Date paidDate, String detail, double total, UserEntity user) {
 		super();
 		this.paidDate = paidDate;
 		this.detail = detail;
 		this.total = total;
 		this.user = user;
-		this.order = order;
 	}
 
 	public String getId() {
@@ -98,11 +95,11 @@ public class PaymentEntity {
 		this.user = user;
 	}
 
-	public OrderEntity getOrder() {
-		return order;
-	}
-
-	public void setOrder(OrderEntity order) {
-		this.order = order;
-	}
+//	public OrderEntity getOrder() {
+//		return order;
+//	}
+//
+//	public void setOrder(OrderEntity order) {
+//		this.order = order;
+//	}
 }

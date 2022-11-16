@@ -20,10 +20,10 @@ public class OrderDetail {
 	@JoinColumn(name = "product_id")
 	private ProductEntity product;
 	
-	@ManyToOne
-	@MapsId("orderId")
-	@JoinColumn(name = "order_id")
-	private OrderEntity order;
+//	@ManyToOne
+//	@MapsId("orderId")
+//	@JoinColumn(name = "order_id")
+//	private OrderEntity order;
 	
 	@Column
 	private double unitPrice;
@@ -40,22 +40,21 @@ public class OrderDetail {
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderDetail(OrderDetailKey id, ProductEntity product, OrderEntity order, double unitPrice, int quantity,
-			double discount, CartEntity cart) {
+	public OrderDetail(OrderDetailKey id, ProductEntity product, double unitPrice, int quantity,
+			double discount) {
 		super();
 		this.id = id;
 		this.product = product;
-		this.order = order;
+//		this.order = order;
 		this.unitPrice = unitPrice;
 		this.quantity = quantity;
 		this.discount = discount;
 	}
 
-	public OrderDetail(ProductEntity product, OrderEntity order, double unitPrice, int quantity, double discount,
-			CartEntity cart) {
+	public OrderDetail(ProductEntity product, double unitPrice, int quantity, double discount) {
 		super();
 		this.product = product;
-		this.order = order;
+//		this.order = order;
 		this.unitPrice = unitPrice;
 		this.quantity = quantity;
 		this.discount = discount;
@@ -76,14 +75,14 @@ public class OrderDetail {
 	public void setProduct(ProductEntity product) {
 		this.product = product;
 	}
-
-	public OrderEntity getOrder() {
-		return order;
-	}
-
-	public void setOrder(OrderEntity order) {
-		this.order = order;
-	}
+//
+//	public OrderEntity getOrder() {
+//		return order;
+//	}
+//
+//	public void setOrder(OrderEntity order) {
+//		this.order = order;
+//	}
 
 	public double getUnitPrice() {
 		return unitPrice;

@@ -3,6 +3,7 @@ package com.example.kltn.SpringAPILambdaBuy.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -13,10 +14,12 @@ import org.springframework.stereotype.Service;
 import com.example.kltn.SpringAPILambdaBuy.common.request.brand.CreateBrandDto;
 import com.example.kltn.SpringAPILambdaBuy.common.request.brand.UpdateBrandDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.BrandResponseDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.SupplierResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.entities.BrandEntity;
-
+import com.example.kltn.SpringAPILambdaBuy.entities.SupplierEntity;
 import com.example.kltn.SpringAPILambdaBuy.repository.BrandRepository;
 import com.example.kltn.SpringAPILambdaBuy.service.BrandService;
+
 @Service
 @Transactional
 public class BrandServiceImpl implements BrandService {
@@ -24,24 +27,24 @@ public class BrandServiceImpl implements BrandService {
 	private BrandRepository brandRepository;
 	
 	@Override
-	public List<BrandResponseDto> findAll() {
-		List<BrandEntity> list = brandRepository.findAll();
-		List<BrandResponseDto> listDto = new ArrayList<>();
-		for (BrandEntity brand : list) {
-			BrandResponseDto brandDto = new BrandResponseDto(brand.getId(), brand.getName(), brand.getFullName(), brand.getAddress(), brand.getIsDeleted(), brand.getCreatedDate(), brand.getCreatedBy(), brand.getUpdatedDate(), brand.getUpdatedBy());
-			listDto.add(brandDto);
-		}
-		return listDto;
+	public List<BrandEntity> findAll() {
+		return brandRepository.findAll();
 	}
 
 	@Override
-	public BrandResponseDto findById(String id) {
-		BrandEntity brand = brandRepository.findById(id).isPresent() 
+	public BrandEntity findById(String id) {
+		return brandRepository.findById(id).isPresent() 
 							? brandRepository.findById(id).get()
 							: null;
-		if(brand != null) {
-			BrandResponseDto brandDto = new BrandResponseDto(brand.getId(), brand.getName(), brand.getFullName(), brand.getAddress(), brand.getIsDeleted(), brand.getCreatedDate(), brand.getCreatedBy(), brand.getUpdatedDate(), brand.getUpdatedBy());
-			return brandDto;
+	}
+	
+	@Override
+	public BrandEntity findByName(String name) {
+		List<BrandEntity> list = brandRepository.findAll();
+		for (BrandEntity brand : list) {
+			if(brand.getName().equalsIgnoreCase(name)) {
+				return brand;
+			}
 		}
 		return null;
 	}
@@ -54,10 +57,26 @@ public class BrandServiceImpl implements BrandService {
 	@Override
 	public BrandResponseDto create(CreateBrandDto createBrandDto) {
 		BrandEntity brand = new BrandEntity(createBrandDto.getName(), createBrandDto.getFullName(), createBrandDto.getAddress(), new HashSet<>(), false, new Date(), "admin", null, null);
-		BrandEntity createBrand = brandRepository.save(brand);
-		if(createBrand != null) {
-			BrandResponseDto brandDto = new BrandResponseDto(createBrand.getId(), createBrand.getName(), createBrand.getFullName(), createBrand.getAddress(), createBrand.getIsDeleted(), createBrand.getCreatedDate(), createBrand.getCreatedBy(), createBrand.getUpdatedDate(), createBrand.getUpdatedBy());
-			return brandDto;
+		List<BrandEntity> list = brandRepository.findAll();
+		if(list.size() == 0) {
+			BrandEntity createBrand = brandRepository.save(brand);
+			if(createBrand != null) {
+				BrandResponseDto brandDto = new BrandResponseDto(createBrand.getId(), createBrand.getName(), createBrand.getFullName(), createBrand.getAddress(), createBrand.getIsDeleted(), createBrand.getCreatedDate(), createBrand.getCreatedBy(), createBrand.getUpdatedDate(), createBrand.getUpdatedBy());
+				return brandDto;
+			} else {
+				return null;
+			}
+		}
+		for (BrandEntity brandEntity : list) {
+			if(!brandEntity.getName().equalsIgnoreCase(createBrandDto.getName())) {
+				BrandEntity createBrand = brandRepository.save(brand);
+				if(createBrand != null) {
+					BrandResponseDto brandDto = new BrandResponseDto(createBrand.getId(), createBrand.getName(), createBrand.getFullName(), createBrand.getAddress(), createBrand.getIsDeleted(), createBrand.getCreatedDate(), createBrand.getCreatedBy(), createBrand.getUpdatedDate(), createBrand.getUpdatedBy());
+					return brandDto;
+				} else {
+					return null;
+				}
+			}
 		}
 		return null;
 	}
@@ -74,7 +93,7 @@ public class BrandServiceImpl implements BrandService {
 			brand.setListProduct(updateBrandDto.getListProduct());
 			brand.setUpdatedDate(new Date());
 			BrandEntity updateBrand = brandRepository.save(brand);
-			BrandResponseDto brandDto = new BrandResponseDto(updateBrand.getId(), updateBrand.getName(), updateBrand.getFullName(), updateBrand.getAddress(), updateBrand.getIsDeleted(), updateBrand.getCreatedDate(), updateBrand.getCreatedBy(), updateBrand.getUpdatedDate(), updateBrand.getUpdatedBy());
+			BrandResponseDto brandDto = new BrandResponseDto(updateBrand.getId(), updateBrand.getName(), updateBrand.getFullName(), updateBrand.getAddress(), updateBrand.getIsDeleted(), brand.getCreatedDate(), brand.getCreatedBy(), new Date(), "admin");
 			return brandDto;
 		}
 		return null;

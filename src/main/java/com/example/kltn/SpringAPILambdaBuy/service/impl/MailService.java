@@ -23,8 +23,8 @@ public class MailService implements MailSender {
 	@Override
 	@Async
 	public void send(String to, String template) {
-		final String email_host = "dev10.vndigitech@gmail.com";
-		final String password = "cmpommclnugxfvao";
+		final String email_host = "contact.lambdabuy@gmail.com";
+		final String password = "yydapcylhthcvzyu";
 		
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -52,7 +52,7 @@ public class MailService implements MailSender {
 			Transport.send(message);
 			System.out.println("Sent mail");
 		} catch (MessagingException e) {
-			throw new IllegalStateException("Failed to send mail");
+			e.printStackTrace();
 		}
 	}
 

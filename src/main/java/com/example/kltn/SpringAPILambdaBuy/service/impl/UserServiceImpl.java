@@ -6,7 +6,11 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +40,16 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Override
+	public String currentUsername() {
+		Authentication auth = SecurityContextHolder.getContext()
+						.getAuthentication();
+		UserEntity userDetails = (UserEntity) auth.getPrincipal();
+		
+		String currentUsername = userDetails.getEmail();
+		return currentUsername;
+	}
 	
 	@Override
 	public UserEntity findById(String id) {
@@ -77,18 +91,21 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserResponseDto createUserProfile(CreateUserProfileDto createUserProfileDto) {
-		ProfileEntity profile = new ProfileEntity(createUserProfileDto.getPhoneNumber(), createUserProfileDto.getAddress(), createUserProfileDto.getAvatar(), createUserProfileDto.getFirstName(), createUserProfileDto.getLastName(), new Date(), "admin", new UserEntity());
-		ProfileEntity createProfile = profileService.save(profile);
-		
-		String encodePassword = bCryptPasswordEncoder.encode(createUserProfileDto.getPassword());
-		UserEntity createUser = new UserEntity(createUserProfileDto.getUsername(), createUserProfileDto.getEmail(), encodePassword, true, UserRole.CUSTOMER, new Date(), "admin", new ProfileEntity());
-		createUser.setProfile(createProfile);
-		saveUser(createUser);
-		createProfile.setUser(createUser);
-		profileService.save(createProfile);
-		ProfileResponseDto profileDto = new ProfileResponseDto(profile.getId(), profile.getPhoneNumber(), profile.getAddress(), profile.getAvatar(), profile.getFirstName(), profile.getLastName(), profile.getCreatedDate(), profile.getCreatedBy(), profile.getUpdatedDate(), profile.getUpdatedBy());
-		UserResponseDto userDto = new UserResponseDto(createUser.getId(), createUser.getEmail(), createUser.getUsername(), createUser.getPassword(), createUser.getRole(),  createUser.getCreatedDate(), createUser.getCreatedBy(), createUser.getUpdatedDate(), createUser.getUpdatedBy(), profileDto);
-		return userDto;
+		if(!isAccountExist(createUserProfileDto.getUsername(), createUserProfileDto.getEmail())) {
+			ProfileEntity profile = new ProfileEntity(createUserProfileDto.getPhoneNumber(), createUserProfileDto.getAddress(), createUserProfileDto.getAvatar(), createUserProfileDto.getFirstName(), createUserProfileDto.getLastName(), new Date(), "admin", new UserEntity());
+			ProfileEntity createProfile = profileService.save(profile);
+			
+			String encodePassword = bCryptPasswordEncoder.encode(createUserProfileDto.getPassword());
+			UserEntity createUser = new UserEntity(createUserProfileDto.getUsername(), createUserProfileDto.getEmail(), encodePassword, true, UserRole.CUSTOMER, new Date(), "admin", new ProfileEntity());
+			createUser.setProfile(createProfile);
+			saveUser(createUser);
+			createProfile.setUser(createUser);
+			profileService.save(createProfile);
+			ProfileResponseDto profileDto = new ProfileResponseDto(profile.getId(), profile.getPhoneNumber(), profile.getAddress(), profile.getAvatar(), profile.getFirstName(), profile.getLastName(), profile.getCreatedDate(), profile.getCreatedBy(), profile.getUpdatedDate(), profile.getUpdatedBy());
+			UserResponseDto userDto = new UserResponseDto(createUser.getId(), createUser.getEmail(), createUser.getUsername(), createUser.getPassword(), createUser.getRole(),  createUser.getCreatedDate(), createUser.getCreatedBy(), createUser.getUpdatedDate(), createUser.getUpdatedBy(), profileDto);
+			return userDto;
+		}
+		return null;
 	}
 
 	@Override
@@ -163,4 +180,47 @@ public class UserServiceImpl implements UserService {
 		}
 		return new ResponseCommon<>(400, false, "USER_NOT_EXIST");
 	}
+	
+	public boolean isAccountExist(String username, String email) {
+		List<UserEntity> list = userRepository.findAll();
+		for (UserEntity userEntity : list) {
+			if(userEntity.getUsername().equalsIgnoreCase(username) || userEntity.getEmail().equalsIgnoreCase(email)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public UserEntity getCurrentLoggedInUser(Authentication authentication) {
+		if(authentication == null) return null;
+		
+		UserEntity userEntity = null;
+		Object principal = authentication.getPrincipal();
+		
+		if(principal instanceof UserDetailService) {
+//			userEntity = ((UserDetailService) principal).get
+		}
+		return null;
+	}
+
+	@Override
+	public String isUserPresent(UserEntity user) {
+		UserEntity theUser = userRepository.getUserByEmailAndUsername(user.getEmail(), user.getUsername());
+		return theUser != null 
+					? theUser.getId()
+					: null;
+	}
+
+	@Override
+	public UserEntity save(UserEntity user) {
+		return userRepository.save(user);
+	}
+
+	@Override
+	public String getAccessToken() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

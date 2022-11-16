@@ -3,14 +3,12 @@ package com.example.kltn.SpringAPILambdaBuy.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +19,12 @@ import com.example.kltn.SpringAPILambdaBuy.common.request.authen.RegisterDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ProfileResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.common.response.UserResponseDto;
-import com.example.kltn.SpringAPILambdaBuy.entities.CartEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.ConfirmationTokenEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.ProfileEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserRole;
-import com.example.kltn.SpringAPILambdaBuy.repository.UserRepository;
 import com.example.kltn.SpringAPILambdaBuy.security.PasswordEncoder;
 import com.example.kltn.SpringAPILambdaBuy.service.AuthenticationService;
-import com.example.kltn.SpringAPILambdaBuy.service.CartService;
 import com.example.kltn.SpringAPILambdaBuy.service.ConfirmationTokenService;
 import com.example.kltn.SpringAPILambdaBuy.service.ProfileService;
 import com.example.kltn.SpringAPILambdaBuy.service.UserService;
@@ -45,9 +40,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	
 	@Autowired
 	private ProfileService profileService;
-	
-	@Autowired
-	private CartService cartService;
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -113,8 +105,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		createProfile.setUser(createUser);
 		profileService.save(createProfile);
 		
-		CartEntity cart = new CartEntity(0, true, profile, new HashSet<>());
-		cartService.save(cart);
+//		CartItemEntity cart = new CartItemEntity(0, createUser, null);
+//		cartService.save(cart);
 		
 		createUser.setProfile(null);
 		//createUser.setAdmin(null); 
