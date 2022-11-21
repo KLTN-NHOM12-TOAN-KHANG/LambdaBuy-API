@@ -79,8 +79,8 @@ public class UserEntity implements UserDetails {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private ProfileEntity profile;
 	
-	@OneToMany(mappedBy = "user")
-	private Set<OrderEntity> listOrder;
+//	@OneToMany(mappedBy = "user")
+//	private Set<OrderEntity> listOrder;
 	
 	@OneToMany(mappedBy = "user")
 	private Set<PaymentEntity> listPayment;
@@ -328,11 +328,11 @@ public class UserEntity implements UserDetails {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Set<OrderEntity> getListOrder() {
-		return listOrder;
-	}
-
-	public void setListOrder(Set<OrderEntity> listOrder) {
-		this.listOrder = listOrder;
-	}	
+//	public Set<OrderEntity> getListOrder() {
+//		return listOrder;
+//	}
+//
+//	public void setListOrder(Set<OrderEntity> listOrder) {
+//		this.listOrder = listOrder;
+//	}	
 }

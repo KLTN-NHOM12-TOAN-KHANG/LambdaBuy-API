@@ -33,5 +33,6 @@ public interface UserService {
 	ResponseCommon<List<UserResponseDto>> getUsers();
 	ResponseCommon<?> deleteUser(String id);
 	String isUserPresent(UserEntity user);
+	String getUsernameFromToken(String token);
 	
 }

@@ -20,8 +20,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.kltn.SpringAPILambdaBuy.common.request.brand.CreateBrandDto;
 import com.example.kltn.SpringAPILambdaBuy.common.request.brand.UpdateBrandDto;
+import com.example.kltn.SpringAPILambdaBuy.common.request.user.UpdateUserDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.BrandResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
+import com.example.kltn.SpringAPILambdaBuy.common.response.UserResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.entities.BrandEntity;
 import com.example.kltn.SpringAPILambdaBuy.service.BrandService;
 
@@ -70,7 +72,7 @@ public class BrandController {
 	}
 	
 	@PostMapping("/brand/create")
-	public ResponseEntity<ResponseCommon<BrandResponseDto>> createBrand(@RequestBody CreateBrandDto createBrandDto) {
+	public ResponseEntity<ResponseCommon<?>> createBrand(@RequestBody CreateBrandDto createBrandDto) {
 		BrandResponseDto brandDto = brandService.create(createBrandDto);
 		if(brandDto != null) {
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "CREATE_BRAND_SUCCESS", brandDto));
@@ -79,13 +81,13 @@ public class BrandController {
 	}
 	
 	@PostMapping("/brand/update")
-	public ResponseEntity<ResponseCommon<BrandResponseDto>> updateBrand(@RequestBody UpdateBrandDto updateBrandDto) {
+	public ResponseEntity<ResponseCommon<?>> updateBrand(@RequestBody UpdateBrandDto updateBrandDto) {
 		BrandResponseDto brandDto = brandService.update(updateBrandDto);
 		if(brandDto != null) {
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "UPDATE_BRAND_SUCCESS", brandDto));
 		}
 		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "UPDATE_BRAND_FAIL", null));
-	}
+	}	
 	
 	@GetMapping("/brand/delete/{id}")
 	public ResponseEntity<ResponseCommon<BrandResponseDto>> deleteBrand(@PathVariable String id) {
