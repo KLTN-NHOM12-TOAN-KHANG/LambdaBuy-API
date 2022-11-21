@@ -1,9 +1,12 @@
 package com.example.kltn.SpringAPILambdaBuy.entities;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -12,99 +15,54 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "orderdetail")
 public class OrderDetail {
-	@EmbeddedId
-	private OrderDetailKey id;
+	@Id
+	private String id = UUID.randomUUID().toString();
 	
-	@ManyToOne
-	@MapsId("productId")
-	@JoinColumn(name = "product_id")
-	private ProductEntity product;
-	
-//	@ManyToOne
-//	@MapsId("orderId")
-//	@JoinColumn(name = "order_id")
-//	private OrderEntity order;
-	
-	@Column
-	private double unitPrice;
-	
-	@Column
-	private int quantity;
-	
-	@Column
-	private double discount;
-	
+	private String productName;
+	private float subtotal;
+	private float shipping;
+	private float tax;
+	private float total;
 
 	public OrderDetail() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderDetail(OrderDetailKey id, ProductEntity product, double unitPrice, int quantity,
-			double discount) {
+	public OrderDetail(String productName, String subtotal, String shipping, String tax, String total) {
 		super();
-		this.id = id;
-		this.product = product;
-//		this.order = order;
-		this.unitPrice = unitPrice;
-		this.quantity = quantity;
-		this.discount = discount;
-	}
+		this.productName = productName;
+        this.subtotal = Float.parseFloat(subtotal);
+        this.shipping = Float.parseFloat(shipping);
+        this.tax = Float.parseFloat(tax);
+        this.total = Float.parseFloat(total);
+    }
 
-	public OrderDetail(ProductEntity product, double unitPrice, int quantity, double discount) {
-		super();
-		this.product = product;
-//		this.order = order;
-		this.unitPrice = unitPrice;
-		this.quantity = quantity;
-		this.discount = discount;
-	}
-
-	public OrderDetailKey getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(OrderDetailKey id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public ProductEntity getProduct() {
-		return product;
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setProduct(ProductEntity product) {
-		this.product = product;
-	}
-//
-//	public OrderEntity getOrder() {
-//		return order;
-//	}
-//
-//	public void setOrder(OrderEntity order) {
-//		this.order = order;
-//	}
-
-	public double getUnitPrice() {
-		return unitPrice;
+	public String getSubtotal() {
+		return String.format("%.2f", subtotal);
 	}
 
-	public void setUnitPrice(double unitPrice) {
-		this.unitPrice = unitPrice;
+	public String getShipping() {
+		return String.format("%.2f", shipping);
 	}
 
-	public int getQuantity() {
-		return quantity;
+	public String getTax() {
+		return String.format("%.2f", tax);
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public String getTotal() {
+		return String.format("%.2f", total);
 	}
-
-	public double getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(double discount) {
-		this.discount = discount;
-	}	
 }

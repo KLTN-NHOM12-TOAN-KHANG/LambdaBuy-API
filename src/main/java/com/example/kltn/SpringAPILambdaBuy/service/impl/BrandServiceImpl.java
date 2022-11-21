@@ -90,7 +90,8 @@ public class BrandServiceImpl implements BrandService {
 			brand.setName(updateBrandDto.getName());
 			brand.setFullName(updateBrandDto.getFullName());
 			brand.setAddress(updateBrandDto.getAddress());
-			brand.setListProduct(updateBrandDto.getListProduct());
+			brand.setIsDeleted(updateBrandDto.getIsDeleted());
+			brand.setListProduct(brand.getListProduct());
 			brand.setUpdatedDate(new Date());
 			BrandEntity updateBrand = brandRepository.save(brand);
 			BrandResponseDto brandDto = new BrandResponseDto(updateBrand.getId(), updateBrand.getName(), updateBrand.getFullName(), updateBrand.getAddress(), updateBrand.getIsDeleted(), brand.getCreatedDate(), brand.getCreatedBy(), new Date(), "admin");

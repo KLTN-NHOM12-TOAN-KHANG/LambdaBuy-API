@@ -74,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
 		BrandEntity brand = brandService.findByName(createProductDto.getBrand());
 		SupplierEntity supplier = supplierService.findByName(createProductDto.getSupplier());
 		
-		ProductEntity product = new ProductEntity(createProductDto.getName(), createProductDto.getDescription(), createProductDto.getUnitPrice(), createProductDto.getDiscount(), createProductDto.getImage(), createProductDto.getInStock(), createProductDto.getManufacturedDate(), createProductDto.getCountry(), createProductDto.getIsSpecial(), new Date(), "admin", null, null, false, new HashSet<>(), category, brand, supplier);
+		ProductEntity product = new ProductEntity(createProductDto.getName(), createProductDto.getDescription(), createProductDto.getUnitPrice(), createProductDto.getDiscount(), createProductDto.getImage(), createProductDto.getInStock(), createProductDto.getManufacturedDate(), createProductDto.getCountry(), createProductDto.getIsSpecial(), new Date(), "admin", null, null, false, category, brand, supplier);
 		ProductEntity createProduct = productRepository.save(product);
 		if(createProduct != null) {
 			ProductResponseDto productDto = new ProductResponseDto(product.getId() ,product.getName(), product.getDescription(), product.getUnitPrice(), product.getDiscount(), product.getImage(), product.getInStock(), product.getManufacturedDate(), product.getCountry(), product.getSpecial(),

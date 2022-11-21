@@ -8,6 +8,8 @@ import javax.transaction.Transactional;
 
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +31,9 @@ import com.example.kltn.SpringAPILambdaBuy.repository.UserRepository;
 import com.example.kltn.SpringAPILambdaBuy.service.ProfileService;
 import com.example.kltn.SpringAPILambdaBuy.service.UserService;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -41,14 +46,27 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	@Value("${app.jwt.secret}")
+    private String SECRET_KEY;
+	
+	@Override
+	public String getUsernameFromToken(String token) {
+		Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+		return claims.getSubject();
+
+	}
+	
 	@Override
 	public String currentUsername() {
 		Authentication auth = SecurityContextHolder.getContext()
 						.getAuthentication();
-		UserEntity userDetails = (UserEntity) auth.getPrincipal();
-		
-		String currentUsername = userDetails.getEmail();
-		return currentUsername;
+		if(!(auth instanceof AnonymousAuthenticationToken)) {
+			UserEntity userDetails = (UserEntity) auth.getPrincipal();
+			
+			String currentUsername = userDetails.getEmail();
+			return currentUsername;
+		}
+		return null;
 	}
 	
 	@Override

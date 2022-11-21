@@ -33,6 +33,7 @@ import com.example.kltn.SpringAPILambdaBuy.common.response.UserResponseDto;
 import com.example.kltn.SpringAPILambdaBuy.entities.ProfileEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserEntity;
 import com.example.kltn.SpringAPILambdaBuy.service.UserService;
+import com.example.kltn.SpringAPILambdaBuy.utils.JwtTokenUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -52,13 +53,16 @@ public class UserController {
 //		}
 //		return null;
 //	}
-	@GetMapping("/getCurrentUser")
-	public ResponseEntity<ResponseCommon<?>> getCurrentUser() {
-		String username = userService.currentUsername();
+	@PostMapping("/getCurrentUser")
+	public ResponseEntity<ResponseCommon<?>> getCurrentUser(@RequestBody String token) {
+//		String username = userService.currentUsername();
+		String username = userService.getUsernameFromToken(token).split(",")[1];
 		UserEntity user = new UserEntity();
 		if(null != username) {
 			user = userService.findByEmail(username);
-			UserResponseDto userDto = new UserResponseDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(), user.getRole(), user.getCreatedDate(), user.getCreatedBy(), user.getUpdatedDate(), user.getUpdatedBy());
+			ProfileEntity profile = user.getProfile();
+			ProfileResponseDto profileDto = new ProfileResponseDto(profile.getId(), profile.getPhoneNumber(), profile.getAddress(), profile.getAvatar(), profile.getFirstName(), profile.getLastName());
+			UserResponseDto userDto = new UserResponseDto(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(), user.getRole(), user.isEnabled(), user.isLocked(), user.getCreatedDate(), user.getCreatedBy(), user.getUpdatedDate(), user.getUpdatedBy(), profileDto);
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "GET_CURRENT_USER_SUCCESS", userDto));
 		}
 		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "GET_CURRENT_USER_FAIL", null));

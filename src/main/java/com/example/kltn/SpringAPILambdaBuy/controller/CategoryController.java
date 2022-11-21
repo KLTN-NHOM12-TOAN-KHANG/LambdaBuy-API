@@ -60,7 +60,7 @@ public class CategoryController {
 		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "CATEGORY_NOT_FOUND", null));
 	}
 	
-	@GetMapping("/category/name/{id}")
+	@GetMapping("/category/name/{name}")
 	public ResponseEntity<ResponseCommon<?>> findByName(@PathVariable("name") String name) {
 		CategoryEntity category = categoryService.findByName(name);
 		if(category != null) {

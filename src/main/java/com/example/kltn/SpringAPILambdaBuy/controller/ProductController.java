@@ -69,7 +69,7 @@ public class ProductController {
 	}
 	
 	@PostMapping("/product/create")
-	public ResponseEntity<ResponseCommon<?>> create(@RequestBody CreateProductDto createProductDto) {
+	public ResponseEntity<ResponseCommon<?>> create(CreateProductDto createProductDto) {
 		ProductResponseDto productDto = productService.create(createProductDto);
 		if(productDto != null) {
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "CREATE_PRODUCT_SUCCESS", productDto));
@@ -78,7 +78,7 @@ public class ProductController {
 	}
 	
 	@PostMapping("/product/update")
-	public ResponseEntity<ResponseCommon<?>> update(@RequestBody UpdateProductDto updateProductDto){
+	public ResponseEntity<ResponseCommon<?>> update(UpdateProductDto updateProductDto){
 		ProductResponseDto productDto = productService.update(updateProductDto);
 		if(productDto != null) {
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "UPDATE_PRODUCT_SUCCESS", productDto));

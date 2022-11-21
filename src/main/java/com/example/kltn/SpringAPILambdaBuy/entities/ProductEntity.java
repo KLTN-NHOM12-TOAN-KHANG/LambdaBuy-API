@@ -69,8 +69,8 @@ public class ProductEntity {
 	@Column
 	private boolean isDeleted;
 
-	@OneToMany(mappedBy = "product")
-	Set<OrderDetail> listOrderDetail;
+//	@OneToMany(mappedBy = "product")
+//	Set<OrderDetail> listOrderDetail;
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id")
@@ -91,7 +91,7 @@ public class ProductEntity {
 
 	public ProductEntity(String id, String name, String description, double unitPrice, double discount, String image,
 			int inStock, int manufacturedDate, String country, boolean special, Date createdDate,
-			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, Set<OrderDetail> listOrderDetail,
+			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted,
 			CategoryEntity category, BrandEntity brand) {
 		super();
 		this.id = id;
@@ -109,12 +109,12 @@ public class ProductEntity {
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
 		this.isDeleted = isDeleted;
-		this.listOrderDetail = listOrderDetail;
+//		this.listOrderDetail = listOrderDetail;
 	}
 
 	public ProductEntity(String name, String description, double unitPrice, double discount, String image,
 			int inStock, int manufacturedDate, String country, boolean special, Date createdDate,
-			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, Set<OrderDetail> listOrderDetail,
+			String createdBy, Date updatedDate, String updatedBy, boolean isDeleted, 
 			CategoryEntity category, BrandEntity brand, SupplierEntity supplier) {
 		super();
 		this.name = name;
@@ -131,7 +131,7 @@ public class ProductEntity {
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
 		this.isDeleted = isDeleted;
-		this.listOrderDetail = listOrderDetail;
+//		this.listOrderDetail = listOrderDetail;
 		this.category = category;
 		this.brand = brand;
 		this.supplier = supplier;
@@ -258,13 +258,13 @@ public class ProductEntity {
 		this.updatedBy = updatedBy;
 	}
 
-	public Set<OrderDetail> getOrderDetails() {
-		return listOrderDetail;
-	}
-
-	public void setOrderDetails(Set<OrderDetail> listOrderDetail) {
-		this.listOrderDetail = listOrderDetail;
-	}
+//	public Set<OrderDetail> getOrderDetails() {
+//		return listOrderDetail;
+//	}
+//
+//	public void setOrderDetails(Set<OrderDetail> listOrderDetail) {
+//		this.listOrderDetail = listOrderDetail;
+//	}
 
 	public CategoryEntity getCategory() {
 		return category;
@@ -282,13 +282,13 @@ public class ProductEntity {
 		this.brand = brand;
 	}
 
-	public Set<OrderDetail> getListOrderDetail() {
-		return listOrderDetail;
-	}
-
-	public void setListOrderDetail(Set<OrderDetail> listOrderDetail) {
-		this.listOrderDetail = listOrderDetail;
-	}
+//	public Set<OrderDetail> getListOrderDetail() {
+//		return listOrderDetail;
+//	}
+//
+//	public void setListOrderDetail(Set<OrderDetail> listOrderDetail) {
+//		this.listOrderDetail = listOrderDetail;
+//	}
 
 	public SupplierEntity getSupplier() {
 		return supplier;
