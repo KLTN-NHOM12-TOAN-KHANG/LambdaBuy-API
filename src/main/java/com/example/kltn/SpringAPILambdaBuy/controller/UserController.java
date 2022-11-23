@@ -41,21 +41,8 @@ public class UserController {
 	private static final String APPLICATION_JSON_VALUE = "application/json";
 	@Autowired
 	private UserService userService;
-
-//	@GetMapping("/getCurrentUser")
-//	public UserEntity getCurrentUser() {
-////		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		String username = userService.currentUsername();
-//		UserEntity user = new UserEntity();
-//		if(null != username) {
-//			user = userService.findByUsername(username);
-//			return user;
-//		}
-//		return null;
-//	}
 	@PostMapping("/getCurrentUser")
 	public ResponseEntity<ResponseCommon<?>> getCurrentUser(@RequestBody String token) {
-//		String username = userService.currentUsername();
 		String username = userService.getUsernameFromToken(token).split(",")[1];
 		UserEntity user = new UserEntity();
 		if(null != username) {

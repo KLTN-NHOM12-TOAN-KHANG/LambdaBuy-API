@@ -16,4 +16,7 @@ import com.example.kltn.SpringAPILambdaBuy.entities.UserEntity;
 public interface OrderRepository extends JpaRepository<OrderEntity, String> {
 //	@Query(value = "SELECT * FROM orders o WHERE u.user_id = ?1", nativeQuery = true)
 //	List<OrderEntity> findByUserId(String id);
+	
+//	@Query("SELECT o.id , p.name FROM orders o JOIN o.list_product p")
+//	public String getJoinInfomation();
 }

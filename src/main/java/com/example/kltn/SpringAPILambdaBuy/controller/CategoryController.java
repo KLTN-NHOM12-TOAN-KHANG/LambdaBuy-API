@@ -70,8 +70,9 @@ public class CategoryController {
 		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "CATEGORY_NOT_FOUND", null));
 	}
 	
-	@PostMapping("/category/create")
-	public ResponseEntity<ResponseCommon<?>> create(@RequestBody CreateCategoryDto createCategoryDto) {
+	@GetMapping("/category/create")
+	public ResponseEntity<ResponseCommon<?>> create(@RequestParam("name") String name) {
+		CreateCategoryDto createCategoryDto = new CreateCategoryDto(name);
 		CategoryResponseDto categoryDto = categoryService.create(createCategoryDto);
 		if(categoryDto != null) {
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "CREATE_CATEGORY_SUCCESS", categoryDto));
@@ -79,8 +80,9 @@ public class CategoryController {
 		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "CREATE_CATEGORY_FAIL", null));
 	}
 	
-	@PostMapping("/category/update")
-	public ResponseEntity<ResponseCommon<?>> update(@RequestBody UpdateCategoryDto updateCategoryDto) {
+	@GetMapping("/category/update")
+	public ResponseEntity<ResponseCommon<?>> update(@RequestParam("id") String id ,@RequestParam("name") String name) {
+		UpdateCategoryDto updateCategoryDto = new UpdateCategoryDto(id, name);
 		CategoryResponseDto categoryDto = categoryService.update(updateCategoryDto);
 		if(categoryDto != null) {
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "UPDATE_CATEGORY_SUCCESS", categoryDto));

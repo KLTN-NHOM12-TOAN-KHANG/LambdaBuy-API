@@ -2,10 +2,14 @@ package com.example.kltn.SpringAPILambdaBuy.entities;
 
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +27,10 @@ public class ImageEntity {
 	@Lob
 	@Column(length = 1000)
 	private byte[] imageData;
+	
+//	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	@JoinColumn(name = "profile_id")
+//	private ProfileEntity profile;
 	
 	
 

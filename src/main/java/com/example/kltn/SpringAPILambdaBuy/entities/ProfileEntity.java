@@ -53,6 +53,9 @@ public class ProfileEntity {
 	@Column
 	private String updatedBy;
 	
+//	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+//	private ImageEntity image;
+	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private UserEntity user;

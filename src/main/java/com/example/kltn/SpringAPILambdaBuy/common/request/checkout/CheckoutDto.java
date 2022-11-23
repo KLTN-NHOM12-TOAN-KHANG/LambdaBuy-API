@@ -1,4 +1,4 @@
-package com.example.kltn.SpringAPILambdaBuy.entities;
+package com.example.kltn.SpringAPILambdaBuy.common.request.checkout;
 
 import java.util.UUID;
 
@@ -12,24 +12,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "orderdetail")
-public class OrderDetail {
-	@Id
+
+public class CheckoutDto {
 	private String id = UUID.randomUUID().toString();
-	
 	private String productName;
 	private float subtotal;
 	private float shipping;
 	private float tax;
 	private float total;
 
-	public OrderDetail() {
+	public CheckoutDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderDetail(String productName, String subtotal, String shipping, String tax, String total) {
+	public CheckoutDto(String productName, String subtotal, String shipping, String tax, String total) {
 		super();
 		this.productName = productName;
         this.subtotal = Float.parseFloat(subtotal);

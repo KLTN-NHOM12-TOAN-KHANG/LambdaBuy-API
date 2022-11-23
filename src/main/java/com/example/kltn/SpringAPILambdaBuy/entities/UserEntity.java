@@ -79,9 +79,6 @@ public class UserEntity implements UserDetails {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private ProfileEntity profile;
 	
-//	@OneToMany(mappedBy = "user")
-//	private Set<OrderEntity> listOrder;
-	
 	@OneToMany(mappedBy = "user")
 	private Set<PaymentEntity> listPayment;
 

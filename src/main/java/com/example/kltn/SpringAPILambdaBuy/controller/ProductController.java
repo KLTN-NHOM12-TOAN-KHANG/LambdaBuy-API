@@ -56,6 +56,16 @@ public class ProductController {
 	
 	}
 	
+	@GetMapping("/product/entity/{id}")
+	public ResponseEntity<ResponseCommon<?>> findProductById(@PathVariable("id") String id) {
+		ProductEntity product = productService.findById(id);
+		if(product != null) {
+			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "FIND_PRODUCT_SUCCESS", product));
+		}
+		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "PRODUCT_NOT_FOUND", null));
+	
+	}
+	
 	@GetMapping("/product/name/{name}")
 	public ResponseEntity<ResponseCommon<?>> findContainName(@PathVariable("name") String name) {
 		List<ProductEntity> listProduct = productService.findContainName(name);

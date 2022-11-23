@@ -1,12 +1,15 @@
 package com.example.kltn.SpringAPILambdaBuy.entities;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -18,6 +21,8 @@ import javax.persistence.Transient;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity()
 @Table(name = "product")
@@ -74,15 +79,21 @@ public class ProductEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id")
+	@JsonIgnore
 	private CategoryEntity category;
 	
 	@ManyToOne
 	@JoinColumn(name = "brand_id")
+	@JsonIgnore
 	private BrandEntity brand;
 	
 	@ManyToOne
 	@JoinColumn(name = "supplier_id")
+	@JsonIgnore
 	private SupplierEntity supplier;
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	private Collection<OrderDetailEntity> listOrderDetail;
 
 	public ProductEntity() {
 		super();
@@ -311,5 +322,13 @@ public class ProductEntity {
 	}
 	public void setManufacturedDate(int manufacturedDate) {
 		this.manufacturedDate = manufacturedDate;
+	}
+
+	public Collection<OrderDetailEntity> getListOrderDetail() {
+		return listOrderDetail;
+	}
+
+	public void setListOrderDetail(Collection<OrderDetailEntity> listOrderDetail) {
+		this.listOrderDetail = listOrderDetail;
 	}
 }

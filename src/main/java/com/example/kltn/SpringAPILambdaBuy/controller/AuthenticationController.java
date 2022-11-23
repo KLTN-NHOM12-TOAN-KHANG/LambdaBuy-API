@@ -67,7 +67,8 @@ public class AuthenticationController {
 //            authenticationService.login(loginDto);
             return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "LOGIN_SUCCESS", response));
 		} catch (BadCredentialsException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			
+			return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "UNAUTHORIZED", null));
 		}
 	}
 }

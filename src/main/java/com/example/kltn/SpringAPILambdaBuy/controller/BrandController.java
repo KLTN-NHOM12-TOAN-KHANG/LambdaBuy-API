@@ -28,7 +28,7 @@ import com.example.kltn.SpringAPILambdaBuy.entities.BrandEntity;
 import com.example.kltn.SpringAPILambdaBuy.service.BrandService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(value = "/api", produces = "application/json;charset=UTF-8")
 public class BrandController {
 	private static final String APPLICATION_JSON_VALUE = "application/json";
 	@Autowired
@@ -71,8 +71,9 @@ public class BrandController {
 		return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "SAVE_BRAND_SUCCESS"));
 	}
 	
-	@PostMapping("/brand/create")
-	public ResponseEntity<ResponseCommon<?>> createBrand(@RequestBody CreateBrandDto createBrandDto) {
+	@GetMapping("/brand/create")
+	public ResponseEntity<ResponseCommon<?>> createBrand(@RequestParam("name") String name, @RequestParam("fullName") String fullName, @RequestParam("address") String address) {
+		CreateBrandDto createBrandDto = new CreateBrandDto(name, fullName, address);
 		BrandResponseDto brandDto = brandService.create(createBrandDto);
 		if(brandDto != null) {
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "CREATE_BRAND_SUCCESS", brandDto));
@@ -80,8 +81,9 @@ public class BrandController {
 		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "CREATE_BRAND_FAIL", null));
 	}
 	
-	@PostMapping("/brand/update")
-	public ResponseEntity<ResponseCommon<?>> updateBrand(@RequestBody UpdateBrandDto updateBrandDto) {
+	@GetMapping(value = "/brand/update")
+	public ResponseEntity<ResponseCommon<?>> updateBrand(@RequestParam("id") String id, @RequestParam("name") String name, @RequestParam("fullName") String fullName, @RequestParam("address") String address) {
+		UpdateBrandDto updateBrandDto = new UpdateBrandDto(id, name, fullName, address, false);
 		BrandResponseDto brandDto = brandService.update(updateBrandDto);
 		if(brandDto != null) {
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "UPDATE_BRAND_SUCCESS", brandDto));

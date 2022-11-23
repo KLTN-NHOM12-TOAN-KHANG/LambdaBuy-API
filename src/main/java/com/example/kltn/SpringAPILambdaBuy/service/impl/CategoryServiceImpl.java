@@ -85,9 +85,8 @@ public class CategoryServiceImpl implements CategoryService {
 								: null;
 		if(category != null) {
 			category.setName(updateCategoryDto.getName());
-			category.setListProduct(updateCategoryDto.getListProduct());
-			category.setIsDeleted(updateCategoryDto.getIsDeleted());
-			category.setListProduct(updateCategoryDto.getListProduct());
+			category.setListProduct(category.getListProduct());
+			category.setIsDeleted(category.getIsDeleted());
 			category.setCreatedDate(category.getCreatedDate());;
 			category.setCreatedBy(category.getCreatedBy());
 			category.setUpdatedDate(new Date());

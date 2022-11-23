@@ -10,10 +10,6 @@ public class UpdateSupplierDto {
 	private String name;
 	private String address;
 	private String description;
-	private Set<ProductEntity> listProduct;
-	private boolean isDeleted;
-	private Date updatedDate;
-	private String updatedBy;
 	public String getId() {
 		return id;
 	}
@@ -38,44 +34,16 @@ public class UpdateSupplierDto {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Set<ProductEntity> getListProduct() {
-		return listProduct;
-	}
-	public void setListProduct(Set<ProductEntity> listProduct) {
-		this.listProduct = listProduct;
-	}
-	public boolean isDeleted() {
-		return isDeleted;
-	}
-	public void setDeleted(boolean isDeleted) {
-		this.isDeleted = isDeleted;
-	}
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
+	
 	public UpdateSupplierDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public UpdateSupplierDto(String id, String name, String address, String description, Set<ProductEntity> listProduct,
-			boolean isDeleted, Date updatedDate, String updatedBy) {
+	public UpdateSupplierDto(String id, String name, String address, String description) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.description = description;
-		this.listProduct = listProduct;
-		this.isDeleted = isDeleted;
-		this.updatedDate = updatedDate;
-		this.updatedBy = updatedBy;
 	}
 }

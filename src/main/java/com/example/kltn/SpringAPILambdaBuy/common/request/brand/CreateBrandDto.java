@@ -8,22 +8,16 @@ public class CreateBrandDto {
 	private String name;
 	private String fullName;
 	private String address;
-	private boolean isDeleted;
-	private Date createdDate;
-	private String createdBy;
 	
 	public CreateBrandDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CreateBrandDto(String name, String fullName, String address, boolean isDeleted, Date createdDate, String createdBy) {
+	public CreateBrandDto(String name, String fullName, String address) {
 		super();
 		this.name = name;
 		this.fullName = fullName;
 		this.address = address;
-		this.isDeleted = isDeleted;
-		this.createdDate = createdDate;
-		this.createdBy = createdBy;
 	}
 	public String getName() {
 		return name;
@@ -42,23 +36,5 @@ public class CreateBrandDto {
 	}
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	public boolean getIsDeleted() {
-		return isDeleted;
-	}
-	public void setIsDeleted(boolean isDeleted) {
-		this.isDeleted = isDeleted;
-	}
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-	public String getCreatedBy() {
-		return createdBy;
-	}
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
 	}
 }

@@ -2,16 +2,16 @@ package com.example.kltn.SpringAPILambdaBuy.common.request.cart;
 
 import com.example.kltn.SpringAPILambdaBuy.common.response.ProductResponseDto;
 
-public class Cart {
+public class CartDto {
 	private String productId;
 	private String name;
 	private double price;
 	private int quantity;
-	public Cart() {
+	public CartDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Cart(String productId, String name, double price, int quantity) {
+	public CartDto(String productId, String name, double price, int quantity) {
 		super();
 		this.productId = productId;
 		this.name = name;

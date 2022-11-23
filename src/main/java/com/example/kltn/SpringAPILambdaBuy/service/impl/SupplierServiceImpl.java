@@ -84,8 +84,6 @@ public class SupplierServiceImpl implements SupplierService {
 			supplier.setName(updateSupplierDto.getName());
 			supplier.setAddress(updateSupplierDto.getAddress());
 			supplier.setDescription(updateSupplierDto.getDescription());
-			supplier.setListProduct(updateSupplierDto.getListProduct());
-			supplier.setIsDeleted(updateSupplierDto.isDeleted());
 			supplier.setUpdatedDate(new Date());
 			SupplierEntity updateSupplier = supplierRepository.save(supplier);
 			SupplierResponseDto supplierDto = new SupplierResponseDto(updateSupplier.getId(), updateSupplier.getName(), updateSupplier.getAddress(), updateSupplier.getDescription(), updateSupplier.getIsDeleted(), updateSupplier.getCreatedDate(), updateSupplier.getCreatedBy(), new Date(), "admin");

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.kltn.SpringAPILambdaBuy.common.request.supplier.CreateSupplierDto;
@@ -62,8 +63,9 @@ public class SupplierController {
 		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "SUPPLIER_NOT_FOUND", null));
 	}
 	
-	@PostMapping("/supplier/create")
-	public ResponseEntity<ResponseCommon<?>> createSupplier(@RequestBody CreateSupplierDto createSupplierDto) {
+	@GetMapping("/supplier/create")
+	public ResponseEntity<ResponseCommon<?>> createSupplier(@RequestParam("name") String name, @RequestParam("address") String address, @RequestParam("description") String description) {
+		CreateSupplierDto createSupplierDto = new CreateSupplierDto(name, address, description);
 		SupplierResponseDto supplierDto = supplierService.create(createSupplierDto);
 		if(supplierDto != null) {
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "CREATE_SUPPLIER_SUCCESS", supplierDto));
@@ -71,8 +73,9 @@ public class SupplierController {
 		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "CREATE_SUPPLIER_FAIL", null));
 	}
 	
-	@PostMapping("/supplier/update")
-	public ResponseEntity<ResponseCommon<?>> updateSupplier(@RequestBody UpdateSupplierDto updateSupplierDto) {
+	@GetMapping("/supplier/update")
+	public ResponseEntity<ResponseCommon<?>> updateSupplier(@RequestParam("id") String id ,@RequestParam("name") String name, @RequestParam("address") String address, @RequestParam("description") String description) {
+		UpdateSupplierDto updateSupplierDto = new UpdateSupplierDto(id, name, address, description);
 		SupplierResponseDto supplierDto = supplierService.update(updateSupplierDto);
 		if(supplierDto != null) {
 			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "UPDATE_SUPPLIER_SUCCESS", supplierDto));
