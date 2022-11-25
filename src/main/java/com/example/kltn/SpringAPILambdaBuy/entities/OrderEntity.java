@@ -39,6 +39,10 @@ public class OrderEntity {
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private Collection<OrderDetailEntity> listOrderDetail;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private UserEntity user;
 
 	public OrderEntity() {
 		super();

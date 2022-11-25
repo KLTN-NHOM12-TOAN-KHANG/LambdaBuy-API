@@ -1,11 +1,8 @@
 package com.example.kltn.SpringAPILambdaBuy.common.request.user;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 import com.example.kltn.SpringAPILambdaBuy.common.request.profile.UpdateProfileDto;
-import com.example.kltn.SpringAPILambdaBuy.entities.PaymentEntity;
 
 public class UpdateUserProfileDto {
 	private String id;
@@ -19,14 +16,13 @@ public class UpdateUserProfileDto {
 	private Date updatedDate;
 	private String updatedBy;
 	private UpdateProfileDto profile;
-	private Set<PaymentEntity> listPayment;
 	
 	public UpdateUserProfileDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public UpdateUserProfileDto(String id, String username, String email, String password, boolean locked, boolean enabled, Date createdDate, String createdBy, Date updatedDate,
-			String updatedBy, UpdateProfileDto profile, List<PaymentEntity> listPayment) {
+			String updatedBy, UpdateProfileDto profile) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -39,7 +35,6 @@ public class UpdateUserProfileDto {
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
 		this.profile = profile;
-		this.listPayment = this.listPayment;
 	}
 	public String getId() {
 		return id;
@@ -107,11 +102,5 @@ public class UpdateUserProfileDto {
 	}
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
-	}
-	public Set<PaymentEntity> getListPayment() {
-		return listPayment;
-	}
-	public void setListPayment(Set<PaymentEntity> listPayment) {
-		this.listPayment = listPayment;
 	}
 }

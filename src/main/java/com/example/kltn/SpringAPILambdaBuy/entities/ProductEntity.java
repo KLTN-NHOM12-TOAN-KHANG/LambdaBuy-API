@@ -16,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -95,6 +96,9 @@ public class ProductEntity {
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private Collection<OrderDetailEntity> listOrderDetail;
 
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	private Set<ImageEntity> listImage;
+	
 	public ProductEntity() {
 		super();
 		// TODO Auto-generated constructor stub

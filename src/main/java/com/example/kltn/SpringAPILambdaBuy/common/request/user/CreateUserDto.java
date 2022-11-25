@@ -1,23 +1,8 @@
 package com.example.kltn.SpringAPILambdaBuy.common.request.user;
 
 import java.util.Date;
-import java.util.Set;
-import java.util.UUID;
-
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 
 import com.example.kltn.SpringAPILambdaBuy.common.response.ProfileResponseDto;
-import com.example.kltn.SpringAPILambdaBuy.entities.PaymentEntity;
-import com.example.kltn.SpringAPILambdaBuy.entities.ProfileEntity;
 import com.example.kltn.SpringAPILambdaBuy.entities.UserRole;
 
 public class CreateUserDto {

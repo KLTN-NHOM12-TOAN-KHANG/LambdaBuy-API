@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,9 +29,13 @@ public class ImageEntity {
 	@Column(length = 1000)
 	private byte[] imageData;
 	
-//	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//	@JoinColumn(name = "profile_id")
-//	private ProfileEntity profile;
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "profile_id", nullable = true)
+	private ProfileEntity profile;
+	
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	private ProductEntity product;
 	
 	
 

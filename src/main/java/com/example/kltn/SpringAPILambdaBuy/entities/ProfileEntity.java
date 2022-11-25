@@ -53,8 +53,9 @@ public class ProfileEntity {
 	@Column
 	private String updatedBy;
 	
-//	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-//	private ImageEntity image;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "image_id", nullable = true)
+	private ImageEntity image;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
@@ -223,12 +224,4 @@ public class ProfileEntity {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-
-//	public Set<OrderEntity> getListOrder() {
-//		return listOrder;
-//	}
-//
-//	public void setListOrder(Set<OrderEntity> listOrder) {
-//		this.listOrder = listOrder;
-//	}
 }

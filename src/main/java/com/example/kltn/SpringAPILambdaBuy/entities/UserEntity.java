@@ -78,9 +78,9 @@ public class UserEntity implements UserDetails {
 	
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private ProfileEntity profile;
-	
+		
 	@OneToMany(mappedBy = "user")
-	private Set<PaymentEntity> listPayment;
+	private Set<OrderEntity> listOrder;
 
 	@JsonDeserialize(using = CustomAuthorityDeserializer.class)
 	@Override
@@ -194,13 +194,13 @@ public class UserEntity implements UserDetails {
 		this.admin = admin;
 	}
 */
-	public Set<PaymentEntity> getListPayment() {
-		return listPayment;
-	}
-
-	public void setListPayment(Set<PaymentEntity> listPayment) {
-		this.listPayment = listPayment;
-	}
+//	public Set<PaymentEntity> getListPayment() {
+//		return listPayment;
+//	}
+//
+//	public void setListPayment(Set<PaymentEntity> listPayment) {
+//		this.listPayment = listPayment;
+//	}
 
 	public void setUsername(String username) {
 		this.username = username;
@@ -302,7 +302,7 @@ public class UserEntity implements UserDetails {
 
 	public UserEntity(String id, String username, String email, String password, boolean locked, boolean enabled,
 			UserRole role, Date createdDate, String createdBy, Date updatedDate, String updatedBy,
-			ProfileEntity profile, Set<PaymentEntity> listPayment) {
+			ProfileEntity profile) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -316,7 +316,6 @@ public class UserEntity implements UserDetails {
 		this.updatedDate = updatedDate;
 		this.updatedBy = updatedBy;
 		this.profile = profile;
-		this.listPayment = listPayment;
 	}
 
 
@@ -325,11 +324,11 @@ public class UserEntity implements UserDetails {
 		// TODO Auto-generated constructor stub
 	}
 
-//	public Set<OrderEntity> getListOrder() {
-//		return listOrder;
-//	}
-//
-//	public void setListOrder(Set<OrderEntity> listOrder) {
-//		this.listOrder = listOrder;
-//	}	
+	public Set<OrderEntity> getListOrder() {
+		return listOrder;
+	}
+
+	public void setListOrder(Set<OrderEntity> listOrder) {
+		this.listOrder = listOrder;
+	}	
 }
