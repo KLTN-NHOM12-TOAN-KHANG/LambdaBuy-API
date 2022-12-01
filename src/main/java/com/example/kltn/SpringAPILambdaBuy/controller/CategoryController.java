@@ -33,7 +33,7 @@ import com.example.kltn.SpringAPILambdaBuy.service.CategoryService;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("")
 public class CategoryController {
 	private static final String APPLICATION_JSON_VALUE = "application/json";
 	@Autowired

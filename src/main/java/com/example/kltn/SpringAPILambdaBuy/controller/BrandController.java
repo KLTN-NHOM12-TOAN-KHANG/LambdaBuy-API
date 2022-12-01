@@ -28,7 +28,7 @@ import com.example.kltn.SpringAPILambdaBuy.entities.BrandEntity;
 import com.example.kltn.SpringAPILambdaBuy.service.BrandService;
 
 @RestController
-@RequestMapping(value = "/api", produces = "application/json;charset=UTF-8")
+@RequestMapping(value = "", produces = "application/json;charset=UTF-8")
 public class BrandController {
 	private static final String APPLICATION_JSON_VALUE = "application/json";
 	@Autowired

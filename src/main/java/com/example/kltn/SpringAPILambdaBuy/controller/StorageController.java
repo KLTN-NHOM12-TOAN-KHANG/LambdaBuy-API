@@ -31,7 +31,7 @@ import com.example.kltn.SpringAPILambdaBuy.service.StorageService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping("/api/image")
+@RequestMapping("/image")
 public class StorageController {
 	@Autowired
 	private StorageService storageService;

@@ -18,7 +18,7 @@ import com.example.kltn.SpringAPILambdaBuy.service.OrderService;
 import com.example.kltn.SpringAPILambdaBuy.service.ProductService;
 
 @RestController
-@RequestMapping("/api/orderdetail")
+@RequestMapping("/orderdetail")
 public class OrderDetailController {
 	@Autowired
 	private OrderDetailService orderDetailService;

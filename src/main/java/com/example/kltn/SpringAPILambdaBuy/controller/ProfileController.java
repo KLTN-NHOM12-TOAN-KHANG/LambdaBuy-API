@@ -22,7 +22,7 @@ import com.example.kltn.SpringAPILambdaBuy.service.ProfileService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping("/api/profile")
+@RequestMapping("/profile")
 public class ProfileController {
 	@Autowired
 	private ProfileService profileService;

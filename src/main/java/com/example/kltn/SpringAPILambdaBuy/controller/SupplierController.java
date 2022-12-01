@@ -26,7 +26,7 @@ import com.example.kltn.SpringAPILambdaBuy.entities.SupplierEntity;
 import com.example.kltn.SpringAPILambdaBuy.service.SupplierService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("")
 public class SupplierController {
 	@Autowired
 	private SupplierService supplierService;

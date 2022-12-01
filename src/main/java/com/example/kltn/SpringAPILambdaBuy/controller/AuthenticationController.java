@@ -26,7 +26,7 @@ import com.example.kltn.SpringAPILambdaBuy.service.UserService;
 import com.example.kltn.SpringAPILambdaBuy.utils.JwtTokenUtil;
 
 @RestController
-@RequestMapping("/api/authentication/")
+@RequestMapping("/authentication/")
 public class AuthenticationController {
 	private static final String APPLICATION_JSON_VALUE = "application/json";
 	
