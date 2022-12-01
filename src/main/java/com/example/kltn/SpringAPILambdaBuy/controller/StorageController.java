@@ -22,7 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.kltn.SpringAPILambdaBuy.common.request.image.UploadImageDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.ImageResponseDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
+import com.example.kltn.SpringAPILambdaBuy.entities.ImageEntity;
 import com.example.kltn.SpringAPILambdaBuy.service.StorageService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/api/image")
@@ -31,31 +37,41 @@ public class StorageController {
 	private StorageService storageService;
 	
 	@PostMapping("/upload")
-	public ResponseEntity<?> uploadImage(@RequestParam("image")MultipartFile file) throws IOException {
-		String uploadImage = storageService.uploadImage(file);
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(uploadImage);
+	public ResponseEntity<?> uploadImage(@RequestBody UploadImageDto uploadImageDto) throws IOException {
+		ImageEntity image = storageService.uploadImage(uploadImageDto);
+		if(image != null) {
+			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "UPLOAD_IMAGE_SUCCESS", image));
+		}
+		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "UPLOAD_IMAGE_FAIL"));
 	}
 
-	@GetMapping("/{fileName}")
+	@GetMapping("/name/{fileName}")
 	public ResponseEntity<?> downloadImage(@PathVariable String fileName){
-		byte[] imageData=storageService.downloadImage(fileName);
+		byte[] imageData = storageService.downloadImage(fileName);
 		return ResponseEntity.status(HttpStatus.OK)
 				.contentType(MediaType.valueOf("image/png"))
 				.body(imageData);
 
 	}
 	
-	@PostMapping("/upload-multi")
-	public ResponseEntity<?> uploadMultiImage(@RequestParam("images") MultipartFile[] files) {
-		try {
-			System.out.println("File list: ");
-			for (MultipartFile file : files) {
-				storageService.uploadImage(file);
-			}
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	@GetMapping("/{id}")
+	public ResponseEntity<?> findById(@PathVariable("id") String id){
+		ImageEntity image = storageService.findById(id);
+		if(image != null) {
+			return ResponseEntity.ok().body(new ResponseCommon<>(200, true, "FIND_IMAGE_SUCCESS", image));
 		}
+		return ResponseEntity.badRequest().body(new ResponseCommon<>(400, false, "IMAGE_NOT_FOUND", image));
 	}
+//	@PostMapping("/upload-multi")
+//	public ResponseEntity<?> uploadMultiImage(@RequestParam("images") MultipartFile[] files) {
+//		try {
+//			System.out.println("File list: ");
+//			for (MultipartFile file : files) {
+//				storageService.uploadImage(file);
+//			}
+//			return new ResponseEntity<>(HttpStatus.OK);
+//		} catch (Exception e) {
+//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		}
+//	}
 }

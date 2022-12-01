@@ -2,12 +2,16 @@ package com.example.kltn.SpringAPILambdaBuy.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.kltn.SpringAPILambdaBuy.common.request.image.UploadImageDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.ImageResponseDto;
+import com.example.kltn.SpringAPILambdaBuy.common.response.ResponseCommon;
 import com.example.kltn.SpringAPILambdaBuy.entities.ImageEntity;
 import com.example.kltn.SpringAPILambdaBuy.repository.StorageRepository;
 import com.example.kltn.SpringAPILambdaBuy.service.StorageService;
@@ -19,15 +23,17 @@ public class StorageServiceImpl implements StorageService {
 	private StorageRepository storageRepository;
 	
 	@Override
-	public String uploadImage(MultipartFile file) throws IOException {
+	public ImageEntity uploadImage(UploadImageDto uploadImageDto) throws IOException {
 		ImageEntity img = new ImageEntity();
-		img.setName(Math.random() + file.getOriginalFilename());
-		img.setType(file.getContentType());
-		img.setImageData(ImageUtil.compressImage(file.getBytes()));
+		img.setName(uploadImageDto.getName());
+		img.setType(uploadImageDto.getType());
+		byte[] decoded = Base64.getDecoder().decode(uploadImageDto.getImageData());
+		img.setImageData(ImageUtil.compressImage(decoded));
 		
 		ImageEntity createImage = storageRepository.save(img);
 		if(createImage != null) {
-			return "File uploaded successfully: " + file.getOriginalFilename();
+//			ImageResponseDto imageDto = new ImageResponseDto(createImage.getId(), createImage.getName(), createImage.getType());
+			return createImage;
 		}
 		return null;
 	}
@@ -39,6 +45,12 @@ public class StorageServiceImpl implements StorageService {
         return images;
     }
 
+	@Override
+	public ImageEntity findById(String id) {
+		return storageRepository.findById(id).isPresent()
+					? storageRepository.findById(id).get()
+					: null;
+	}
 
 //    public String uploadImageToFileSystem(MultipartFile file) throws IOException {
 //        String filePath=FOLDER_PATH+file.getOriginalFilename();

@@ -34,7 +34,7 @@ public class ImageEntity {
 	private ProfileEntity profile;
 	
 	@ManyToOne
-	@JoinColumn(name = "product_id")
+	@JoinColumn(name = "product_id", nullable = true)
 	private ProductEntity product;
 	
 	

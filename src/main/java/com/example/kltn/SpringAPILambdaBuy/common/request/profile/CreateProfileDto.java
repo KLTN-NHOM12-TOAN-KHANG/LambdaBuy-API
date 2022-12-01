@@ -2,32 +2,24 @@ package com.example.kltn.SpringAPILambdaBuy.common.request.profile;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class UpdateProfileDto {
-	private String id;
+public class CreateProfileDto {
 	private String phoneNumber;
 	private String address;
 	private String avatar;
 	private String firstName;
 	private String lastName;
-	public UpdateProfileDto() {
+	public CreateProfileDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public UpdateProfileDto(String id, String phoneNumber, String address, String avatar, String firstName,
+	public CreateProfileDto(String phoneNumber, String address, String avatar, String firstName,
 			String lastName) {
 		super();
-		this.id = id;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.avatar = avatar;
 		this.firstName = firstName;
 		this.lastName = lastName;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
 	}
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -59,4 +51,6 @@ public class UpdateProfileDto {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	
+	
 }

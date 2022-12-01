@@ -32,7 +32,7 @@ public class ProfileEntity {
 	@Column
 	private String address;
 	
-	@Column
+	@Column(columnDefinition = "TEXT", nullable = true)
 	private String avatar;
 	
 	@Column
@@ -224,4 +224,14 @@ public class ProfileEntity {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
+	public ImageEntity getImage() {
+		return image;
+	}
+
+	public void setImage(ImageEntity image) {
+		this.image = image;
+	}
+	
+	
 }
